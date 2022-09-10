@@ -8,12 +8,14 @@
 ## OptionalDeps: Blizzard_DebugTools, SharedMedia, Tukui, ButtonFacade
 ## X-oUF: ElvUF
 
-Developer\Load_Developer.xml
-Libraries\Load_Libraries.xml
+Developer\Developer.xml
+Libraries\Libraries.xml
 Init.lua
-Locales\Load_Locales.xml
-Media\Load_Media.xml
-Settings\Load_Config.xml
-Core\Load_Core.xml
-Layout\Load_Layout.xml
-Modules\Load_Modules.xml
+Locales\Locales.xml
+Media\Media.xml
+Settings\Config.xml
+Core\Core.xml
+Layout\Layout.xml
+Modules\Modules.xml
+
+Options\Options.xml
