@@ -315,6 +315,21 @@ function E:SetupLayout(layout, noDataReset, noDisplayMsg)
     E.db.unitframe.units.player.infoPanel.enable = true
     E.db.unitframe.units.player.power.attachTextTo = "InfoPanel"
     E.db.unitframe.units.player.power.height = 22
+    E.db.unitframe.units.player.customTexts = {
+      {
+        ["level"] = {
+          enable = true,
+          font = "MONOCHROMEOUTLINE",
+          size = 10,
+          fontOutline = "OUTLINE",
+          justifyH = "LEFT",
+          xOffset = 4,
+          yOffset = 0,
+          attachTextTo = "Health",
+          text_format = "[level]"
+        }
+      }
+    }
       --Target
     E.db.unitframe.units.target.aurabar.height = 26
     E.db.unitframe.units.target.buffs.anchorPoint = "TOPLEFT"

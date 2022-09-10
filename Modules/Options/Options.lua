@@ -129,7 +129,8 @@ function OPT:Initialize()
     "NihilisticPandemonium",
     "|cffff7d0aMerathilis|r",
     "|cFF8866ccSimpy|r",
-    "|cFF0070DEAzilroka|r"
+    "|cFF0070DEAzilroka|r",
+    "|cFF0070DEBonfyre|r"
   }
   local TESTERS = {
   }

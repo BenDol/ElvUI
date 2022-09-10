@@ -8,6 +8,20 @@ To load the AddOn engine add this to the top of your file:
 
 --Lua functions
 local _G, min, pairs, strsplit, unpack, wipe, type, tcopy = _G, min, pairs, strsplit, unpack, wipe, type, table.copy
+
+function table.dump(t, depth)
+  if not depth then depth = 0 end
+  for k,v in pairs(t) do
+    str = (' '):rep(depth * 2) .. k .. ': '
+    if type(v) ~= "table" then
+      print(str .. tostring(v))
+    else
+      print(str)
+      table.dump(v, depth+1)
+    end
+  end
+end
+
 --WoW API / Variables
 local hooksecurefunc = hooksecurefunc
 local CreateFrame = CreateFrame
@@ -122,7 +136,6 @@ do
 end
 
 function AddOn:OnInitialize()
-  print("OnInitialize")
   if not ElvCharacterDB then
     ElvCharacterDB = {}
   end

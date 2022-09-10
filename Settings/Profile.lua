@@ -1387,9 +1387,6 @@ P.unitframe = {
       width = 270,
       height = 70,
       lowmana = 30,
-      healPrediction = {
-        enable = true
-      },
       threatStyle = "GLOW",
       smartAuraPosition = "DISABLED",
       colorOverride = "USE_DEFAULT",
@@ -1397,10 +1394,13 @@ P.unitframe = {
       disableTargetGlow = true,
       health = {
         text_format = "[healthcolor][health:current-percent]",
-        position = "LEFT",
-        xOffset = 2,
+        position = "RIGHT",
+        xOffset = -4,
         yOffset = 0,
         attachTextTo = "Health"
+      },
+      healPrediction = {
+        enable = true
       },
       fader = {
         enable = false,
@@ -1425,11 +1425,11 @@ P.unitframe = {
         width = "fill",
         height = 10,
         offset = 0,
-        position = "RIGHT",
+        position = "CENTER",
         hideonnpc = false,
-        xOffset = -2,
+        xOffset = 2,
         yOffset = 0,
-        attachTextTo = "Health",
+        attachTextTo = "Power",
         detachFromFrame = false,
         detachedWidth = 250,
         strataAndLevel = {
@@ -1618,6 +1618,19 @@ P.unitframe = {
           lengthBeforeFade = 0.3,
           forceBlankTexture = true
         }
+      },
+      customTexts = {
+        level = {
+          attachTextTo = "Health",
+          enable = true,
+          text_format = "[level]",
+          yOffset = 0,
+          font = "Homespun",
+          justifyH = "LEFT",
+          fontOutline = "MONOCHROMEOUTLINE",
+          xOffset = 4,
+          size = 10,
+        },
       }
     },
     target = {
@@ -1699,9 +1712,9 @@ P.unitframe = {
         scale = 1
       },
       portrait = {
-        enable = false,
+        enable = true,
         width = 45,
-        overlay = false,
+        overlay = true,
         fullOverlay = false,
         style = "3D",
         overlayAlpha = 0.35
