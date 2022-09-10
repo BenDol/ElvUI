@@ -14,7 +14,7 @@ P.general = {
 	autoRepair = "NONE",
 	autoRoll = false,
 	autoAcceptInvite = false,
-	bottomPanel = true,
+	bottomPanel = false,
 	hideErrorFrame = true,
 	enhancedPvpMessages = true,
 	watchFrameHeight = 480,
@@ -32,7 +32,7 @@ P.general = {
 	valuecolor = {r = 0.99, g = 0.48, b = 0.17},
 	cropIcon = 2,
 	minimap = {
-		size = 176,
+		size = 200,
 		locationText = "MOUSEOVER",
 		locationFontSize = 12,
 		locationFontOutline = "OUTLINE",
@@ -167,7 +167,9 @@ P.bags = {
 	bagSize = 34,
 	bankSize = 34,
 	bagWidth = 406,
+	bagAutoWidth = true,
 	bankWidth = 406,
+	bankAutoWidth = true,
 	currencyFormat = "ICON_TEXT_ABBR",
 	moneyFormat = "SMART",
 	moneyCoins = true,
@@ -1274,7 +1276,7 @@ P.unitframe = {
 	},
 	colors = {
 		borderColor = {r = 0, g = 0, b = 0},
-		healthclass = false,
+		healthclass = true,
 		forcehealthreaction = false,
 		powerclass = false,
 		colorhealthbyvalue = true,
@@ -1383,7 +1385,7 @@ P.unitframe = {
 			enable = true,
 			orientation = "LEFT",
 			width = 270,
-			height = 54,
+			height = 70,
 			lowmana = 30,
 			healPrediction = {
 				enable = true
@@ -1488,9 +1490,9 @@ P.unitframe = {
 				scale = 1
 			},
 			portrait = {
-				enable = false,
+				enable = true,
 				width = 45,
-				overlay = false,
+				overlay = true,
 				fullOverlay = false,
 				style = "3D",
 				overlayAlpha = 0.35
@@ -1621,7 +1623,7 @@ P.unitframe = {
 		target = {
 			enable = true,
 			width = 270,
-			height = 54,
+			height = 70,
 			orientation = "RIGHT",
 			threatStyle = "GLOW",
 			smartAuraPosition = "DISABLED",
@@ -2987,7 +2989,7 @@ P.unitframe = {
 			},
 			colorOverride = "USE_DEFAULT",
 			width = 184,
-			height = 54,
+			height = 70,
 			groupSpacing = 0,
 			disableMouseoverGlow = false,
 			disableTargetGlow = false,
@@ -4140,7 +4142,7 @@ P.actionbar = {
 
 	hotkeyTextPosition = "TOPRIGHT",
 	hotkeyTextXOffset = 0,
-	hotkeyTextYOffset = -3,
+	hotkeyTextYOffset = 2,
 
 	countTextPosition = "BOTTOMRIGHT",
 	countTextXOffset = 0,
@@ -4154,6 +4156,7 @@ P.actionbar = {
 	lockActionBars = true,
 	rightClickSelfCast = false,
 	desaturateOnCooldown = false,
+	animation = "ZOOM_FADE",
 
 	equippedItem = false,
 	equippedItemColor = {r = 0.4, g = 1.0, b = 0.4},

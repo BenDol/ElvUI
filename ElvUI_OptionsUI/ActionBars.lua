@@ -113,8 +113,18 @@ local function BuildABConfig()
 					AB:ToggleDesaturation(value)
 				end
 			},
-			transparentBackdrops = {
+			animation = {
 				order = 11,
+				type = "select",
+				name = L["Animate Button Click"],
+				desc = L["The type of click animation for action buttons."],
+				values = {
+					["NONE"] = L["NONE"],
+					["ZOOM_FADE"] = L["ZOOM_FADE"]
+				}
+			},
+			transparentBackdrops = {
+				order = 12,
 				type = "toggle",
 				name = L["Transparent Backdrops"],
 				set = function(info, value)
@@ -123,7 +133,7 @@ local function BuildABConfig()
 				end
 			},
 			transparentButtons = {
-				order = 12,
+				order = 13,
 				type = "toggle",
 				name = L["Transparent Buttons"],
 				set = function(info, value)
@@ -132,7 +142,7 @@ local function BuildABConfig()
 				end
 			},
 			movementModifier = {
-				order = 13,
+				order = 14,
 				type = "select",
 				name = L["Pick Up Action Key"],
 				desc = L["The button you must hold down in order to drag an ability to another action button."],
@@ -145,7 +155,7 @@ local function BuildABConfig()
 				}
 			},
 			globalFadeAlpha = {
-				order = 14,
+				order = 15,
 				type = "range",
 				name = L["Global Fade Transparency"],
 				desc = L["Transparency level when not in combat, no target exists, full health, not casting, and no focus target exists."],
@@ -154,14 +164,14 @@ local function BuildABConfig()
 				set = function(info, value) E.db.actionbar[info[#info]] = value AB.fadeParent:SetAlpha(1-value) end
 			},
 			equippedItem = {
-				order = 15,
+				order = 16,
 				type = "toggle",
 				name = L["Equipped Item"],
 				get = function(info) return E.db.actionbar[info[#info]] end,
 				set = function(info, value) E.db.actionbar[info[#info]] = value AB:UpdateButtonSettings() end
 			},
 			equippedItemColor = {
-				order = 16,
+				order = 17,
 				type = "color",
 				name = L["Equipped Item Color"],
 				get = function(info)
@@ -177,7 +187,7 @@ local function BuildABConfig()
 				disabled = function() return not E.db.actionbar.equippedItem end
 			},
 			colorGroup = {
-				order = 17,
+				order = 18,
 				type = "group",
 				name = L["COLORS"],
 				guiInline = true,
@@ -219,7 +229,7 @@ local function BuildABConfig()
 				}
 			},
 			fontGroup = {
-				order = 18,
+				order = 19,
 				type = "group",
 				name = L["Fonts"],
 				guiInline = true,
@@ -284,20 +294,25 @@ local function BuildABConfig()
 								name = L["Stack Text Y-Offset"],
 								min = -10, max = 10, step = 1
 							},
-							hotkeyTextPosition = {
+							spacer = {
 								order = 4,
+								type = "description",
+								name = ""
+							},
+							hotkeyTextPosition = {
+								order = 5,
 								type = "select",
 								name = L["Keybind Text Position"],
 								values = textPoints
 							},
 							hotkeyTextXOffset = {
-								order = 5,
+								order = 6,
 								type = "range",
 								name = L["Keybind Text X-Offset"],
 								min = -10, max = 10, step = 1
 							},
 							hotkeyTextYOffset = {
-								order = 6,
+								order = 7,
 								type = "range",
 								name = L["Keybind Text Y-Offset"],
 								min = -10, max = 10, step = 1
@@ -307,7 +322,7 @@ local function BuildABConfig()
 				}
 			},
 			lbf = {
-				order = 19,
+				order = 20,
 				type = "group",
 				guiInline = true,
 				name = L["LBF Support"],

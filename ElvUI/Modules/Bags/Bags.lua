@@ -518,9 +518,12 @@ function B:Layout(isBank)
 	local f = B:GetContainerFrame(isBank)
 	if not f then return end
 
+	f:Point("Bottom", RightChatToggleButton, "Top", 0, -E.Border)
+
 	local buttonSize = isBank and B.db.bankSize or B.db.bagSize
 	local buttonSpacing = E.Border*2
-	local containerWidth = ((isBank and B.db.bankWidth) or B.db.bagWidth)
+	local containerWidth = ((isBank and (B.db.bankAutoWidth and RightChatPanel:GetWidth() or B.db.bankWidth)) or 
+						   (B.db.bagAutoWidth and RightChatPanel:GetWidth() or B.db.bagWidth))
 	local numContainerColumns = floor(containerWidth / (buttonSize + buttonSpacing))
 	local holderWidth = ((buttonSize + buttonSpacing) * numContainerColumns) - buttonSpacing
 	local numContainerRows = 0
@@ -985,12 +988,12 @@ function B:UpdateTokens()
 
 		return
 	elseif not f.currencyButton:IsShown() then
-		f.bottomOffset = 28
+		f.bottomOffset = 22
 		f.currencyButton:Show()
 		B:Layout()
 	end
 
-	f.bottomOffset = 28
+	f.bottomOffset = 22
 
 	if numTokens == 1 then
 		f.currencyButton[1]:Point("BOTTOM", f.currencyButton, "BOTTOM", -(f.currencyButton[1].text:GetWidth() / 2), 3)
@@ -1123,7 +1126,7 @@ function B:ContructContainerFrame(name, isBank)
 	f:Hide()
 
 	f.isBank = isBank
-	f.bottomOffset = isBank and 8 or 28
+	f.bottomOffset = isBank and 8 or 22
 	f.topOffset = 50
 	f.BagIDs = isBank and {-1, 5, 6, 7, 8, 9, 10, 11} or {0, 1, 2, 3, 4}
 	f.Bags = {}

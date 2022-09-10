@@ -178,7 +178,7 @@ function E:SetupTheme(theme, noDisplayMsg)
 		E.db.general.backdropfadecolor = E:GetColor(0.054, 0.054, 0.054, 0.8)
 		E.db.unitframe.colors.borderColor = (E.PixelMode and E:GetColor(0, 0, 0) or E:GetColor(0.1, 0.1, 0.1))
 		E.db.unitframe.colors.auraBarBuff = E:GetColor(0.1, 0.1, 0.1)
-		E.db.unitframe.colors.healthclass = false
+		E.db.unitframe.colors.healthclass = true
 		E.db.unitframe.colors.health = E:GetColor(0.1, 0.1, 0.1)
 		E.db.unitframe.colors.castColor = E:GetColor(0.1, 0.1, 0.1)
 		E.db.unitframe.colors.castClassColor = false
@@ -238,6 +238,7 @@ function E:SetupLayout(layout, noDataReset, noDisplayMsg)
 		--Bags
 		E.db.bags.bagSize = 42
 		E.db.bags.bagWidth = 472
+		E.db.bags.bagAutoWidth = true
 		E.db.bags.bankSize = 42
 		E.db.bags.bankWidth = 472
 		--Chat

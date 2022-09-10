@@ -89,6 +89,35 @@ AB.customExitButton = {
 	tooltip = LEAVE_VEHICLE
 }
 
+AB.backdropHighlight = { edgeFile = "Interface\\AddOns\\ElvUI\\Media\\Textures\\glowTex", edgeSize = 8 }
+
+AB.animations = {
+	["NONE"] = function() return end,
+	["ZOOM_FADE"] = function(self)
+      if self.active == 0 then
+        -- init animation
+        self:SetWidth(self.parent:GetWidth())
+        self:SetHeight(self.parent:GetHeight())
+        self:SetScale(self.parent:GetScale())
+        self.tex:SetTexture(self.parent.icon:GetTexture())
+        self.tex:SetVertexColor(self.parent.icon:GetVertexColor())
+        self:SetAlpha(1)
+        self.active = 1
+        return
+      elseif self.active == 1 then
+        -- run animation
+        local fade = 30/GetFramerate()*0.05
+        self:SetAlpha(self:GetAlpha() - fade)
+        self:SetScale(self:GetScale() + fade)
+        if self:GetAlpha() > 0 then return end
+      end
+
+      -- stop animation
+      self.active = nil
+      self:Hide()
+    end
+}
+
 function AB:PositionAndSizeBar(barName)
 	local buttonSpacing = E:Scale(self.db[barName].buttonspacing)
 	local backdropSpacing = E:Scale((self.db[barName].backdropSpacing or self.db[barName].buttonspacing))
@@ -242,6 +271,30 @@ function AB:PositionAndSizeBar(barName)
 	end
 end
 
+local function ButtonAnimate(button)
+	local self = button or this
+	local mouse = arg1 and not keystate
+
+	if not self.icon or not self.icon:IsVisible() then
+		return
+	end
+
+	-- trigger action animation
+	if keystate == "down" or keystate == "up" or self.bar == 11 or mouse then
+		if self:GetAlpha() > .1 then
+			self.animation.active = 0
+			self.animation:Show()
+		end
+	end
+
+	-- handle button highlight
+	if keystate == "down" then
+		self.highlight:Show()
+	elseif not MouseIsOver(self) then
+		self.highlight:Hide()
+	end
+end
+
 function AB:CreateBar(id)
 	local bar = CreateFrame("Frame", "ElvUI_Bar"..id, E.UIParent, "SecureHandlerStateTemplate")
 	local point, anchor, attachTo, x, y = split(",", self.barDefaults["bar"..id].position)
@@ -260,22 +313,46 @@ function AB:CreateBar(id)
 	self:HookScript(bar, "OnLeave", "Bar_OnLeave")
 
 	for i = 1, 12 do
-		bar.buttons[i] = LAB:CreateButton(i, format(bar:GetName().."Button%d", i), bar, nil)
-		bar.buttons[i]:SetState(0, "action", i)
+		local btnName = format("%sButton%d", bar:GetName(), i)
+		local button = LAB:CreateButton(i, btnName, bar, nil)
+		bar.buttons[i] = button
+
+		-- add click animation handler
+      	button:HookScript("OnClick", ButtonAnimate)
+
+		button.animation = CreateFrame("Frame", btnName .. "Animation", button)
+		button.animation.parent = button
+	    button.animation:SetPoint("CENTER", 0, 0)
+	    button.animation:Hide()
+	    button.animation.tex = button.animation:CreateTexture(btnName .. "AnimationTexture", "BACKGROUND")
+	    button.animation.tex:SetTexCoord(.08, .92, .08, .92)
+	    button.animation.tex:SetAllPoints()
+
+    	-- set animation
+    	button.animation:HookScript("OnUpdate", function(...) self.animations[self.db.animation](...) end)
+
+	    -- highlight
+        button.highlight = CreateFrame("Frame", nil, f)
+        button.highlight:SetBackdrop(self.backdropHighlight)
+        button.highlight:SetBackdropBorderColor(1,1,1,.8)
+        button.highlight:SetAllPoints()
+        button.highlight:Hide()
+
+		button:SetState(0, "action", i)
 		for k = 1, 11 do
-			bar.buttons[i]:SetState(k, "action", (k - 1) * 12 + i)
+			button:SetState(k, "action", (k - 1) * 12 + i)
 		end
 
 		if i == 12 then
-			bar.buttons[i]:SetState(11, "custom", AB.customExitButton)
+			button:SetState(11, "custom", AB.customExitButton)
 		end
 
 		if self.LBFGroup and E.private.actionbar.lbf.enable then
-			self.LBFGroup:AddButton(bar.buttons[i])
+			self.LBFGroup:AddButton(button)
 		end
 
-		self:HookScript(bar.buttons[i], "OnEnter", "Button_OnEnter")
-		self:HookScript(bar.buttons[i], "OnLeave", "Button_OnLeave")
+		self:HookScript(button, "OnEnter", "Button_OnEnter")
+		self:HookScript(button, "OnLeave", "Button_OnLeave")
 	end
 	self:UpdateButtonConfig(bar, bar.bindButtons)
 
@@ -829,7 +906,7 @@ function AB:FixKeybindText(button)
 
 	local hotkeyPosition = E.db.actionbar.hotkeyTextPosition or "TOPRIGHT"
 	local hotkeyXOffset = E.db.actionbar.hotkeyTextXOffset or 0
-	local hotkeyYOffset = E.db.actionbar.hotkeyTextYOffset or -3
+	local hotkeyYOffset = E.db.actionbar.hotkeyTextYOffset or 2
 
 	local justify = "RIGHT"
 	if hotkeyPosition == "TOPLEFT" or hotkeyPosition == "BOTTOMLEFT" then

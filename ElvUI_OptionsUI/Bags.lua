@@ -315,6 +315,25 @@ E.Options.args.bags = {
 					desc = L["Adjust the width of the bank frame."],
 					min = 150, max = 1400, step = 1,
 					set = function(info, value) E.db.bags[info[#info]] = value B:Layout(true) end
+				},
+				spacer = {
+					order = 7,
+					type = "description",
+					name = ""
+				},
+				bagAutoWidth = {
+					order = 8,
+					type = "toggle",
+					name = L["Bag Auto Width"],
+					desc = L["Apply width to bag frame automatically to the right chat panel."],
+					set = function(info, value) E.db.bags[info[#info]] = value B:Layout() end
+				},
+				bankAutoWidth = {
+					order = 10,
+					type = "toggle",
+					name = L["Bank Auto Width"],
+					desc = L["Apply width to bank frame automatically to the right chat panel."],
+					set = function(info, value) E.db.bags[info[#info]] = value B:Layout() end
 				}
 			}
 		},
