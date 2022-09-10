@@ -23,50 +23,50 @@ local displayNumberString = ""
 local lastPanel
 
 local function OnEvent(self)
-	lastPanel = self
+  lastPanel = self
 
-	if E.myclass == "HUNTER" then
-		base, posBuff, negBuff = UnitRangedAttackPower("player")
-		apower = base + posBuff + negBuff
-	else
-		base, posBuff, negBuff = UnitAttackPower("player")
-		apower = base + posBuff + negBuff
-	end
+  if E.myclass == "HUNTER" then
+    base, posBuff, negBuff = UnitRangedAttackPower("player")
+    apower = base + posBuff + negBuff
+  else
+    base, posBuff, negBuff = UnitAttackPower("player")
+    apower = base + posBuff + negBuff
+  end
 
-	self.text:SetFormattedText(displayNumberString, apower)
+  self.text:SetFormattedText(displayNumberString, apower)
 end
 
 local function OnEnter(self)
-	DT:SetupTooltip(self)
+  DT:SetupTooltip(self)
 
-	if E.myclass == "HUNTER" then
-		local petAPBonus = ComputePetBonus("PET_BONUS_RAP_TO_AP", apower)
-		local petSpellDmgBonus = ComputePetBonus("PET_BONUS_RAP_TO_SPELLDMG", apower)
+  if E.myclass == "HUNTER" then
+    local petAPBonus = ComputePetBonus("PET_BONUS_RAP_TO_AP", apower)
+    local petSpellDmgBonus = ComputePetBonus("PET_BONUS_RAP_TO_SPELLDMG", apower)
 
-		DT.tooltip:AddDoubleLine(RANGED_ATTACK_POWER, apower, 1, 1, 1, 1, 1, 1)
-		DT.tooltip:AddLine(format(RANGED_ATTACK_POWER_TOOLTIP, max(0, apower) / ATTACK_POWER_MAGIC_NUMBER), nil, nil, nil, 1)
+    DT.tooltip:AddDoubleLine(RANGED_ATTACK_POWER, apower, 1, 1, 1, 1, 1, 1)
+    DT.tooltip:AddLine(format(RANGED_ATTACK_POWER_TOOLTIP, max(0, apower) / ATTACK_POWER_MAGIC_NUMBER), nil, nil, nil, 1)
 
-		if petAPBonus > 0 then
-			DT.tooltip:AddLine(format(PET_BONUS_TOOLTIP_RANGED_ATTACK_POWER, petAPBonus), nil, nil, nil)
-		end
+    if petAPBonus > 0 then
+      DT.tooltip:AddLine(format(PET_BONUS_TOOLTIP_RANGED_ATTACK_POWER, petAPBonus), nil, nil, nil)
+    end
 
-		if petSpellDmgBonus > 0 then
-			DT.tooltip:AddLine(format(PET_BONUS_TOOLTIP_SPELLDAMAGE, petSpellDmgBonus), nil, nil, nil)
-		end
-	else
-		DT.tooltip:AddDoubleLine(MELEE_ATTACK_POWER, apower, 1, 1, 1, 1, 1, 1)
-		DT.tooltip:AddLine(format(MELEE_ATTACK_POWER_TOOLTIP, max(0, apower) / ATTACK_POWER_MAGIC_NUMBER), nil, nil, nil, 1)
-	end
+    if petSpellDmgBonus > 0 then
+      DT.tooltip:AddLine(format(PET_BONUS_TOOLTIP_SPELLDAMAGE, petSpellDmgBonus), nil, nil, nil)
+    end
+  else
+    DT.tooltip:AddDoubleLine(MELEE_ATTACK_POWER, apower, 1, 1, 1, 1, 1, 1)
+    DT.tooltip:AddLine(format(MELEE_ATTACK_POWER_TOOLTIP, max(0, apower) / ATTACK_POWER_MAGIC_NUMBER), nil, nil, nil, 1)
+  end
 
-	DT.tooltip:Show()
+  DT.tooltip:Show()
 end
 
 local function ValueColorUpdate(hex)
-	displayNumberString = join("", ATTACK_POWER, ": ", hex, "%d|r")
+  displayNumberString = join("", ATTACK_POWER, ": ", hex, "%d|r")
 
-	if lastPanel ~= nil then
-		OnEvent(lastPanel)
-	end
+  if lastPanel ~= nil then
+    OnEvent(lastPanel)
+  end
 end
 E.valueColorUpdateFuncs[ValueColorUpdate] = true
 

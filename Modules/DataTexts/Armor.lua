@@ -15,43 +15,43 @@ local _, effectiveArmor
 local lastPanel
 
 local function OnEvent(self)
-	_, effectiveArmor = UnitArmor("player")
+  _, effectiveArmor = UnitArmor("player")
 
-	self.text:SetFormattedText(displayString, effectiveArmor)
+  self.text:SetFormattedText(displayString, effectiveArmor)
 
-	lastPanel = self
+  lastPanel = self
 end
 
 local function OnEnter(self)
-	DT:SetupTooltip(self)
+  DT:SetupTooltip(self)
 
-	DT.tooltip:AddLine(L["Mitigation By Level: "])
-	DT.tooltip:AddLine(" ")
+  DT.tooltip:AddLine(L["Mitigation By Level: "])
+  DT.tooltip:AddLine(" ")
 
-	local playerLevel = E.mylevel + 3
-	local targetLevel = UnitLevel("target")
-	local armorReduction
+  local playerLevel = E.mylevel + 3
+  local targetLevel = UnitLevel("target")
+  local armorReduction
 
-	for i = 1, 4 do
-		armorReduction = PaperDollFrame_GetArmorReduction(effectiveArmor, playerLevel)
-		DT.tooltip:AddDoubleLine(playerLevel, format(chanceString, armorReduction), 1, 1, 1)
-		playerLevel = playerLevel - 1
-	end
+  for i = 1, 4 do
+    armorReduction = PaperDollFrame_GetArmorReduction(effectiveArmor, playerLevel)
+    DT.tooltip:AddDoubleLine(playerLevel, format(chanceString, armorReduction), 1, 1, 1)
+    playerLevel = playerLevel - 1
+  end
 
-	if targetLevel and targetLevel > 0 and (targetLevel > playerLevel + 3 or targetLevel < playerLevel) then
-		armorReduction = PaperDollFrame_GetArmorReduction(effectiveArmor, targetLevel)
-		DT.tooltip:AddDoubleLine(targetLevel, format(chanceString, armorReduction), 1, 1, 1)
-	end
+  if targetLevel and targetLevel > 0 and (targetLevel > playerLevel + 3 or targetLevel < playerLevel) then
+    armorReduction = PaperDollFrame_GetArmorReduction(effectiveArmor, targetLevel)
+    DT.tooltip:AddDoubleLine(targetLevel, format(chanceString, armorReduction), 1, 1, 1)
+  end
 
-	DT.tooltip:Show()
+  DT.tooltip:Show()
 end
 
 local function ValueColorUpdate(hex)
-	displayString = join("", ARMOR, ": ", hex, "%d|r")
+  displayString = join("", ARMOR, ": ", hex, "%d|r")
 
-	if lastPanel ~= nil then
-		OnEvent(lastPanel)
-	end
+  if lastPanel ~= nil then
+    OnEvent(lastPanel)
+  end
 end
 E.valueColorUpdateFuncs[ValueColorUpdate] = true
 

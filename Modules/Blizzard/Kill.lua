@@ -5,6 +5,6 @@ local B = E:GetModule("Blizzard")
 --WoW API / Variables
 
 function B:KillBlizzard()
-	VideoOptionsResolutionPanelUseUIScale:Kill()
-	VideoOptionsResolutionPanelUIScaleSlider:Kill()
+  VideoOptionsResolutionPanelUseUIScale:Kill()
+  VideoOptionsResolutionPanelUIScaleSlider:Kill()
 end

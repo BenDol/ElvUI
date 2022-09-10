@@ -13,23 +13,23 @@ local x, y = 0, 0
 local timeSinceUpdate = 0
 
 local function OnUpdate(self, elapsed)
-	timeSinceUpdate = timeSinceUpdate + elapsed
+  timeSinceUpdate = timeSinceUpdate + elapsed
 
-	if timeSinceUpdate > 0.03333 then
-		timeSinceUpdate = 0
+  if timeSinceUpdate > 0.03333 then
+    timeSinceUpdate = 0
 
-		x, y = GetPlayerMapPosition("player")
+    x, y = GetPlayerMapPosition("player")
 
-		self.text:SetFormattedText(displayString, x * 100, y * 100)
-	end
+    self.text:SetFormattedText(displayString, x * 100, y * 100)
+  end
 end
 
 local function OnClick()
-	ToggleFrame(WorldMapFrame)
+  ToggleFrame(WorldMapFrame)
 end
 
 local function ValueColorUpdate(hex)
-	displayString = join("", hex, "%.2f|r", " , ", hex, "%.2f|r")
+  displayString = join("", hex, "%.2f|r", " , ", hex, "%.2f|r")
 end
 E.valueColorUpdateFuncs[ValueColorUpdate] = true
 

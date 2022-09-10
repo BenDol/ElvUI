@@ -11,23 +11,23 @@ local displayNumberString = ""
 local lastPanel
 
 local function OnEvent(self)
-	local spellDamage = GetSpellBonusDamage(7)
-	local spellHealing = GetSpellBonusHealing()
+  local spellDamage = GetSpellBonusDamage(7)
+  local spellHealing = GetSpellBonusHealing()
 
-	if spellHealing > spellDamage then
-		self.text:SetFormattedText(displayNumberString, L["HP"], spellHealing)
-	else
-		self.text:SetFormattedText(displayNumberString, L["SP"], spellDamage)
-	end
-	lastPanel = self
+  if spellHealing > spellDamage then
+    self.text:SetFormattedText(displayNumberString, L["HP"], spellHealing)
+  else
+    self.text:SetFormattedText(displayNumberString, L["SP"], spellDamage)
+  end
+  lastPanel = self
 end
 
 local function ValueColorUpdate(hex)
-	displayNumberString = join("", "%s: ", hex, "%d|r")
+  displayNumberString = join("", "%s: ", hex, "%d|r")
 
-	if lastPanel ~= nil then
-		OnEvent(lastPanel)
-	end
+  if lastPanel ~= nil then
+    OnEvent(lastPanel)
+  end
 end
 E.valueColorUpdateFuncs[ValueColorUpdate] = true
 

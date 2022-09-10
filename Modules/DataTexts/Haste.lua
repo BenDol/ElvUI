@@ -23,57 +23,57 @@ local displayNumberString = ""
 local lastPanel
 
 local function OnEvent(self, event)
-	lastPanel = self
+  lastPanel = self
 
-	if event == "SPELL_UPDATE_USABLE" then
-		self:UnregisterEvent(event)
-	end
+  if event == "SPELL_UPDATE_USABLE" then
+    self:UnregisterEvent(event)
+  end
 
-	if E.Role == "Caster" then
-		hasteRating = GetCombatRating(CR_HASTE_SPELL)
-	elseif E.myclass == "HUNTER" then
-		hasteRating = GetCombatRating(CR_HASTE_RANGED)
-	else
-		hasteRating = GetCombatRating(CR_HASTE_MELEE)
-	end
+  if E.Role == "Caster" then
+    hasteRating = GetCombatRating(CR_HASTE_SPELL)
+  elseif E.myclass == "HUNTER" then
+    hasteRating = GetCombatRating(CR_HASTE_RANGED)
+  else
+    hasteRating = GetCombatRating(CR_HASTE_MELEE)
+  end
 
-	self.text:SetFormattedText(displayNumberString, hasteRating)
+  self.text:SetFormattedText(displayNumberString, hasteRating)
 end
 
 local function OnEnter(self)
-	DT:SetupTooltip(self)
+  DT:SetupTooltip(self)
 
-	local text, tooltip
-	if E.Role == "Caster" then
-		text = format("%s %d", SPELL_HASTE, hasteRating)
-		tooltip = format(SPELL_HASTE_TOOLTIP, GetCombatRatingBonus(CR_HASTE_SPELL))
-	elseif E.myclass == "HUNTER" then
-		text = format("%s %.2f", format(PAPERDOLLFRAME_TOOLTIP_FORMAT, ATTACK_SPEED), UnitRangedDamage("player"))
-		tooltip = format(CR_HASTE_RATING_TOOLTIP, hasteRating, GetCombatRatingBonus(CR_HASTE_RANGED))
-	else
-		local speed, offhandSpeed = UnitAttackSpeed("player")
+  local text, tooltip
+  if E.Role == "Caster" then
+    text = format("%s %d", SPELL_HASTE, hasteRating)
+    tooltip = format(SPELL_HASTE_TOOLTIP, GetCombatRatingBonus(CR_HASTE_SPELL))
+  elseif E.myclass == "HUNTER" then
+    text = format("%s %.2f", format(PAPERDOLLFRAME_TOOLTIP_FORMAT, ATTACK_SPEED), UnitRangedDamage("player"))
+    tooltip = format(CR_HASTE_RATING_TOOLTIP, hasteRating, GetCombatRatingBonus(CR_HASTE_RANGED))
+  else
+    local speed, offhandSpeed = UnitAttackSpeed("player")
 
-		if offhandSpeed then
-			text = format("%s %.2f / %.2f", format(PAPERDOLLFRAME_TOOLTIP_FORMAT, ATTACK_SPEED), speed, offhandSpeed)
-		else
-			text = format("%s %.2f", format(PAPERDOLLFRAME_TOOLTIP_FORMAT, ATTACK_SPEED), speed)
-		end
+    if offhandSpeed then
+      text = format("%s %.2f / %.2f", format(PAPERDOLLFRAME_TOOLTIP_FORMAT, ATTACK_SPEED), speed, offhandSpeed)
+    else
+      text = format("%s %.2f", format(PAPERDOLLFRAME_TOOLTIP_FORMAT, ATTACK_SPEED), speed)
+    end
 
-		tooltip = format(CR_HASTE_RATING_TOOLTIP, hasteRating, GetCombatRatingBonus(CR_HASTE_MELEE))
-	end
+    tooltip = format(CR_HASTE_RATING_TOOLTIP, hasteRating, GetCombatRatingBonus(CR_HASTE_MELEE))
+  end
 
-	DT.tooltip:AddLine(text, 1, 1, 1)
-	DT.tooltip:AddLine(tooltip, nil, nil, nil, 1)
+  DT.tooltip:AddLine(text, 1, 1, 1)
+  DT.tooltip:AddLine(tooltip, nil, nil, nil, 1)
 
-	DT.tooltip:Show()
+  DT.tooltip:Show()
 end
 
 local function ValueColorUpdate(hex)
-	displayNumberString = join("", SPELL_HASTE_ABBR, ": ", hex, "%d|r")
+  displayNumberString = join("", SPELL_HASTE_ABBR, ": ", hex, "%d|r")
 
-	if lastPanel ~= nil then
-		OnEvent(lastPanel)
-	end
+  if lastPanel ~= nil then
+    OnEvent(lastPanel)
+  end
 end
 E.valueColorUpdateFuncs[ValueColorUpdate] = true
 

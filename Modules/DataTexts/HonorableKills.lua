@@ -11,16 +11,16 @@ local lastPanel
 local displayNumberString = ""
 
 local function OnEvent(self)
-	lastPanel = self
-	self.text:SetFormattedText(displayNumberString, (GetPVPLifetimeStats()))
+  lastPanel = self
+  self.text:SetFormattedText(displayNumberString, (GetPVPLifetimeStats()))
 end
 
 local function ValueColorUpdate(hex)
-	displayNumberString = join("", KILLS, ": ", hex, "%d|r")
+  displayNumberString = join("", KILLS, ": ", hex, "%d|r")
 
-	if lastPanel ~= nil then
-		OnEvent(lastPanel)
-	end
+  if lastPanel ~= nil then
+    OnEvent(lastPanel)
+  end
 end
 E.valueColorUpdateFuncs[ValueColorUpdate] = true
 

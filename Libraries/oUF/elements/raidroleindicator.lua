@@ -33,83 +33,83 @@ local MAINTANK_ICON = [[Interface\GROUPFRAME\UI-GROUP-MAINTANKICON]]
 local MAINASSIST_ICON = [[Interface\GROUPFRAME\UI-GROUP-MAINASSISTICON]]
 
 local function Update(self, event)
-	local unit = self.unit
+  local unit = self.unit
 
-	local element = self.RaidRoleIndicator
+  local element = self.RaidRoleIndicator
 
-	--[[ Callback: RaidRoleIndicator:PreUpdate()
-	Called before the element has been updated.
+  --[[ Callback: RaidRoleIndicator:PreUpdate()
+  Called before the element has been updated.
 
-	* self - the RaidRoleIndicator element
-	--]]
-	if(element.PreUpdate) then
-		element:PreUpdate()
-	end
+  * self - the RaidRoleIndicator element
+  --]]
+  if(element.PreUpdate) then
+    element:PreUpdate()
+  end
 
-	local role, isShown
-	if(UnitInRaid(unit) and not UnitHasVehicleUI(unit)) then
-		if(GetPartyAssignment('MAINTANK', unit)) then
-			isShown = true
-			element:SetTexture(MAINTANK_ICON)
-			role = 'MAINTANK'
-		elseif(GetPartyAssignment('MAINASSIST', unit)) then
-			isShown = true
-			element:SetTexture(MAINASSIST_ICON)
-			role = 'MAINASSIST'
-		end
-	end
+  local role, isShown
+  if(UnitInRaid(unit) and not UnitHasVehicleUI(unit)) then
+    if(GetPartyAssignment('MAINTANK', unit)) then
+      isShown = true
+      element:SetTexture(MAINTANK_ICON)
+      role = 'MAINTANK'
+    elseif(GetPartyAssignment('MAINASSIST', unit)) then
+      isShown = true
+      element:SetTexture(MAINASSIST_ICON)
+      role = 'MAINASSIST'
+    end
+  end
 
-	if isShown then
-		element:Show()
-	else
-		element:Hide()
-	end
+  if isShown then
+    element:Show()
+  else
+    element:Hide()
+  end
 
-	--[[ Callback: RaidRoleIndicator:PostUpdate(role)
-	Called after the element has been updated.
+  --[[ Callback: RaidRoleIndicator:PostUpdate(role)
+  Called after the element has been updated.
 
-	* self - the RaidRoleIndicator element
-	* role - the unit's raid assignment (string?)['MAINTANK', 'MAINASSIST']
-	--]]
-	if(element.PostUpdate) then
-		return element:PostUpdate(role)
-	end
+  * self - the RaidRoleIndicator element
+  * role - the unit's raid assignment (string?)['MAINTANK', 'MAINASSIST']
+  --]]
+  if(element.PostUpdate) then
+    return element:PostUpdate(role)
+  end
 end
 
 local function Path(self, ...)
-	--[[ Override: RaidRoleIndicator.Override(self, event, ...)
-	Used to completely override the internal update function.
+  --[[ Override: RaidRoleIndicator.Override(self, event, ...)
+  Used to completely override the internal update function.
 
-	* self  - the parent object
-	* event - the event triggering the update (string)
-	* ...   - the arguments accompanying the event
-	--]]
-	return (self.RaidRoleIndicator.Override or Update)(self, ...)
+  * self  - the parent object
+  * event - the event triggering the update (string)
+  * ...   - the arguments accompanying the event
+  --]]
+  return (self.RaidRoleIndicator.Override or Update)(self, ...)
 end
 
 local function ForceUpdate(element)
-	return Path(element.__owner, 'ForceUpdate')
+  return Path(element.__owner, 'ForceUpdate')
 end
 
 local function Enable(self)
-	local element = self.RaidRoleIndicator
-	if(element) then
-		element.__owner = self
-		element.ForceUpdate = ForceUpdate
+  local element = self.RaidRoleIndicator
+  if(element) then
+    element.__owner = self
+    element.ForceUpdate = ForceUpdate
 
-		self:RegisterEvent('PARTY_MEMBERS_CHANGED', Path, true)
+    self:RegisterEvent('PARTY_MEMBERS_CHANGED', Path, true)
 
-		return true
-	end
+    return true
+  end
 end
 
 local function Disable(self)
-	local element = self.RaidRoleIndicator
-	if(element) then
-		element:Hide()
+  local element = self.RaidRoleIndicator
+  if(element) then
+    element:Hide()
 
-		self:UnregisterEvent('PARTY_MEMBERS_CHANGED', Path)
-	end
+    self:UnregisterEvent('PARTY_MEMBERS_CHANGED', Path)
+  end
 end
 
 oUF:AddElement('RaidRoleIndicator', Path, Enable, Disable)

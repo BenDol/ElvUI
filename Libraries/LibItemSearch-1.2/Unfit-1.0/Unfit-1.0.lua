@@ -20,96 +20,96 @@ This file is part of Unfit.
 
 local Lib = LibStub:NewLibrary('Unfit-1.0', 9)
 if not Lib then
-	return
+  return
 end
 
 
 --[[ Data ]]--
 
 do
-	local _, Class = UnitClass('player')
-	local Unusable
+  local _, Class = UnitClass('player')
+  local Unusable
 
-	if Class == 'DEATHKNIGHT' then
-		Unusable = {
-			{3, 4, 10, 11, 13, 14, 15, 16},
-			{7}
-		}
-	elseif Class == 'DRUID' then
-		Unusable = {
-			{1, 2, 3, 4, 8, 9, 14, 15, 16},
-			{4, 5, 7},
-			true
-		}
-	elseif Class == 'HUNTER' then
-		Unusable = {
-			{5, 6, 16},
-			{5, 6}
-		}
-	elseif Class == 'MAGE' then
-		Unusable = {
-			{1, 2, 3, 4, 5, 6, 7, 9, 11, 14, 15},
-			{3, 4, 5, 7},
-			true
-		}
-	elseif Class == 'PALADIN' then
-		Unusable = {
-			{3, 4, 10, 11, 13, 14, 15, 16},
-			{},
-			true
-		}
-	elseif Class == 'PRIEST' then
-		Unusable = {
-			{1, 2, 3, 4, 6, 7, 8, 9, 11, 14, 15},
-			{3, 4, 5, 7},
-			true
-		}
-	elseif Class == 'ROGUE' then
-		Unusable = {
-			{2, 6, 7, 9, 10, 16},
-			{4, 5, 6}
-		}
-	elseif Class == 'SHAMAN' then
-		Unusable = {
-			{3, 4, 7, 8, 9, 14, 15, 16},
-			{5}
-		}
-	elseif Class == 'WARLOCK' then
-		Unusable = {
-			{1, 2, 3, 4, 5, 6, 7, 9, 11, 14, 15},
-			{3, 4, 5, 7},
-			true
-		}
-	elseif Class == 'WARRIOR' then
-		Unusable = {{16}, {}}
-	else
-		Unusable = {{}, {}}
-	end
+  if Class == 'DEATHKNIGHT' then
+    Unusable = {
+      {3, 4, 10, 11, 13, 14, 15, 16},
+      {7}
+    }
+  elseif Class == 'DRUID' then
+    Unusable = {
+      {1, 2, 3, 4, 8, 9, 14, 15, 16},
+      {4, 5, 7},
+      true
+    }
+  elseif Class == 'HUNTER' then
+    Unusable = {
+      {5, 6, 16},
+      {5, 6}
+    }
+  elseif Class == 'MAGE' then
+    Unusable = {
+      {1, 2, 3, 4, 5, 6, 7, 9, 11, 14, 15},
+      {3, 4, 5, 7},
+      true
+    }
+  elseif Class == 'PALADIN' then
+    Unusable = {
+      {3, 4, 10, 11, 13, 14, 15, 16},
+      {},
+      true
+    }
+  elseif Class == 'PRIEST' then
+    Unusable = {
+      {1, 2, 3, 4, 6, 7, 8, 9, 11, 14, 15},
+      {3, 4, 5, 7},
+      true
+    }
+  elseif Class == 'ROGUE' then
+    Unusable = {
+      {2, 6, 7, 9, 10, 16},
+      {4, 5, 6}
+    }
+  elseif Class == 'SHAMAN' then
+    Unusable = {
+      {3, 4, 7, 8, 9, 14, 15, 16},
+      {5}
+    }
+  elseif Class == 'WARLOCK' then
+    Unusable = {
+      {1, 2, 3, 4, 5, 6, 7, 9, 11, 14, 15},
+      {3, 4, 5, 7},
+      true
+    }
+  elseif Class == 'WARRIOR' then
+    Unusable = {{16}, {}}
+  else
+    Unusable = {{}, {}}
+  end
 
-	for class = 1, 2 do
-		local subs = {GetAuctionItemSubClasses(class)}
-		for i, subclass in ipairs(Unusable[class]) do
-			Unusable[subs[subclass]] = true
-		end
+  for class = 1, 2 do
+    local subs = {GetAuctionItemSubClasses(class)}
+    for i, subclass in ipairs(Unusable[class]) do
+      Unusable[subs[subclass]] = true
+    end
 
-		Unusable[class] = nil
-	end
+    Unusable[class] = nil
+  end
 
-	Lib.unusable = Unusable
-	Lib.cannotDual = Unusable[3]
+  Lib.unusable = Unusable
+  Lib.cannotDual = Unusable[3]
 end
 
 --[[ API ]]--
 
 function Lib:IsItemUnusable(...)
-	if ... then
-		local subclass, _, slot = select(7, GetItemInfo(...))
-		return Lib:IsClassUnusable(subclass, slot)
-	end
+  if ... then
+    local subclass, _, slot = select(7, GetItemInfo(...))
+    return Lib:IsClassUnusable(subclass, slot)
+  end
 end
 
 function Lib:IsClassUnusable(subclass, slot)
-	if subclass then
-		return slot ~= '' and Lib.unusable[subclass] or slot == 'INVTYPE_WEAPONOFFHAND' and Lib.cannotDual
-	end
+  if subclass then
+    return slot ~= '' and Lib.unusable[subclass] or slot == 'INVTYPE_WEAPONOFFHAND' and Lib.cannotDual
+  end
 end

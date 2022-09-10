@@ -15,29 +15,29 @@ local displayString = ""
 local lastPanel
 
 local function OnEvent(self, event)
-	lastPanel = self
+  lastPanel = self
 
-	if event == "SPELL_UPDATE_USABLE" then
-		self:UnregisterEvent(event)
-	end
+  if event == "SPELL_UPDATE_USABLE" then
+    self:UnregisterEvent(event)
+  end
 
-	if E.Role == "Caster" then
-		hitRatingBonus = GetCombatRatingBonus(CR_HIT_SPELL)
-	elseif E.myclass == "HUNTER" then
-		hitRatingBonus = GetCombatRatingBonus(CR_HIT_RANGED)
-	else
-		hitRatingBonus = GetCombatRatingBonus(CR_HIT_MELEE)
-	end
+  if E.Role == "Caster" then
+    hitRatingBonus = GetCombatRatingBonus(CR_HIT_SPELL)
+  elseif E.myclass == "HUNTER" then
+    hitRatingBonus = GetCombatRatingBonus(CR_HIT_RANGED)
+  else
+    hitRatingBonus = GetCombatRatingBonus(CR_HIT_MELEE)
+  end
 
-	self.text:SetFormattedText(displayString, hitRatingBonus)
+  self.text:SetFormattedText(displayString, hitRatingBonus)
 end
 
 local function ValueColorUpdate(hex)
-	displayString = join("", L["Hit"], ": ", hex, "%.2f%%|r")
+  displayString = join("", L["Hit"], ": ", hex, "%.2f%%|r")
 
-	if lastPanel ~= nil then
-		OnEvent(lastPanel)
-	end
+  if lastPanel ~= nil then
+    OnEvent(lastPanel)
+  end
 end
 E.valueColorUpdateFuncs[ValueColorUpdate] = true
 

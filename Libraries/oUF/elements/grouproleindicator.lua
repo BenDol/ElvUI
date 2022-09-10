@@ -28,80 +28,80 @@ local oUF = ns.oUF
 local UnitGroupRolesAssigned = UnitGroupRolesAssigned
 
 local function Update(self, event)
-	local element = self.GroupRoleIndicator
+  local element = self.GroupRoleIndicator
 
-	--[[ Callback: GroupRoleIndicator:PreUpdate()
-	Called before the element has been updated.
+  --[[ Callback: GroupRoleIndicator:PreUpdate()
+  Called before the element has been updated.
 
-	* self - the GroupRoleIndicator element
-	--]]
-	if(element.PreUpdate) then
-		element:PreUpdate()
-	end
+  * self - the GroupRoleIndicator element
+  --]]
+  if(element.PreUpdate) then
+    element:PreUpdate()
+  end
 
-	local isTank, isHealer, isDamage = UnitGroupRolesAssigned(self.unit)
-	if(isTank or isHealer or isDamage) then
-		local role = isTank and "tank" or isHealer and "healer" or isDamage and "dps"
-		element:SetTexture("Interface\\AddOns\\ElvUI\\media\\textures\\" .. role)
-		element:Show()
-	else
-		element:Hide()
-	end
+  local isTank, isHealer, isDamage = UnitGroupRolesAssigned(self.unit)
+  if(isTank or isHealer or isDamage) then
+    local role = isTank and "tank" or isHealer and "healer" or isDamage and "dps"
+    element:SetTexture("Interface\\AddOns\\ElvUI\\media\\textures\\" .. role)
+    element:Show()
+  else
+    element:Hide()
+  end
 
-	--[[ Callback: GroupRoleIndicator:PostUpdate(role)
-	Called after the element has been updated.
+  --[[ Callback: GroupRoleIndicator:PostUpdate(role)
+  Called after the element has been updated.
 
-	* self - the GroupRoleIndicator element
-	* isTank, isHealer, isDamage - the role as returned by [UnitGroupRolesAssigned](http://wowprogramming.com/docs/api/UnitGroupRolesAssigned)
-	--]]
-	if(element.PostUpdate) then
-		return element:PostUpdate(isTank, isHealer, isDamage)
-	end
+  * self - the GroupRoleIndicator element
+  * isTank, isHealer, isDamage - the role as returned by [UnitGroupRolesAssigned](http://wowprogramming.com/docs/api/UnitGroupRolesAssigned)
+  --]]
+  if(element.PostUpdate) then
+    return element:PostUpdate(isTank, isHealer, isDamage)
+  end
 end
 
 local function Path(self, ...)
-	--[[ Override: GroupRoleIndicator.Override(self, event, ...)
-	Used to completely override the internal update function.
+  --[[ Override: GroupRoleIndicator.Override(self, event, ...)
+  Used to completely override the internal update function.
 
-	* self  - the parent object
-	* event - the event triggering the update (string)
-	* ...   - the arguments accompanying the event
-	--]]
-	return (self.GroupRoleIndicator.Override or Update) (self, ...)
+  * self  - the parent object
+  * event - the event triggering the update (string)
+  * ...   - the arguments accompanying the event
+  --]]
+  return (self.GroupRoleIndicator.Override or Update) (self, ...)
 end
 
 local function ForceUpdate(element)
-	return Path(element.__owner, 'ForceUpdate')
+  return Path(element.__owner, 'ForceUpdate')
 end
 
 local function Enable(self)
-	local element = self.GroupRoleIndicator
-	if(element) then
-		element.__owner = self
-		element.ForceUpdate = ForceUpdate
+  local element = self.GroupRoleIndicator
+  if(element) then
+    element.__owner = self
+    element.ForceUpdate = ForceUpdate
 
-		if(self.unit == 'player') then
-			self:RegisterEvent('PLAYER_ROLES_ASSIGNED', Path, true)
-		else
-			self:RegisterEvent('PARTY_MEMBERS_CHANGED', Path, true)
-		end
+    if(self.unit == 'player') then
+      self:RegisterEvent('PLAYER_ROLES_ASSIGNED', Path, true)
+    else
+      self:RegisterEvent('PARTY_MEMBERS_CHANGED', Path, true)
+    end
 
-		if(element:IsObjectType('Texture') and not element:GetTexture()) then
-			element:SetTexture([[Interface\LFGFrame\UI-LFG-ICON-PORTRAITROLES]])
-		end
+    if(element:IsObjectType('Texture') and not element:GetTexture()) then
+      element:SetTexture([[Interface\LFGFrame\UI-LFG-ICON-PORTRAITROLES]])
+    end
 
-		return true
-	end
+    return true
+  end
 end
 
 local function Disable(self)
-	local element = self.GroupRoleIndicator
-	if(element) then
-		element:Hide()
+  local element = self.GroupRoleIndicator
+  if(element) then
+    element:Hide()
 
-		self:UnregisterEvent('PLAYER_ROLES_ASSIGNED', Path)
-		self:UnregisterEvent('PARTY_MEMBERS_CHANGED', Path)
-	end
+    self:UnregisterEvent('PLAYER_ROLES_ASSIGNED', Path)
+    self:UnregisterEvent('PARTY_MEMBERS_CHANGED', Path)
+  end
 end
 
 oUF:AddElement('GroupRoleIndicator', Path, Enable, Disable)

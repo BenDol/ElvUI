@@ -11,30 +11,30 @@ local registerEvent = frame_metatable.__index.RegisterEvent
 local unregisterEvent = frame_metatable.__index.UnregisterEvent
 
 function Private.UpdateUnits(frame, unit, realUnit)
-	if(unit == realUnit) then
-		realUnit = nil
-	end
+  if(unit == realUnit) then
+    realUnit = nil
+  end
 
-	if(frame.unit ~= unit or frame.realUnit ~= realUnit) then
-		frame.unit = unit
-		frame.realUnit = realUnit
-		frame.id = unit:match('^.-(%d+)')
-		return true
-	end
+  if(frame.unit ~= unit or frame.realUnit ~= realUnit) then
+    frame.unit = unit
+    frame.realUnit = realUnit
+    frame.id = unit:match('^.-(%d+)')
+    return true
+  end
 end
 
 local function onEvent(self, event, ...)
-	if(self:IsVisible() or event == 'UNIT_COMBO_POINTS') then
-		return self[event](self, event, ...)
-	end
+  if(self:IsVisible() or event == 'UNIT_COMBO_POINTS') then
+    return self[event](self, event, ...)
+  end
 end
 
 local event_metatable = {
-	__call = function(funcs, self, ...)
-		for _, func in next, funcs do
-			func(self, ...)
-		end
-	end,
+  __call = function(funcs, self, ...)
+    for _, func in next, funcs do
+      func(self, ...)
+    end
+  end,
 }
 
 --[[ Events: frame:RegisterEvent(event, func, unitless)
@@ -51,35 +51,35 @@ registering events.
              automatically considered unitless (boolean)
 --]]
 function frame_metatable.__index:RegisterEvent(event, func)
-	-- Block OnUpdate polled frames from registering events.
-	-- UNIT_PORTRAIT_UPDATE and UNIT_MODEL_CHANGED which are used for
-	-- portrait updates.
-	if(self.__eventless and event ~= 'UNIT_PORTRAIT_UPDATE' and event ~= 'UNIT_MODEL_CHANGED') then return end
+  -- Block OnUpdate polled frames from registering events.
+  -- UNIT_PORTRAIT_UPDATE and UNIT_MODEL_CHANGED which are used for
+  -- portrait updates.
+  if(self.__eventless and event ~= 'UNIT_PORTRAIT_UPDATE' and event ~= 'UNIT_MODEL_CHANGED') then return end
 
-	argcheck(event, 2, 'string')
-	argcheck(func, 3, 'function')
+  argcheck(event, 2, 'string')
+  argcheck(func, 3, 'function')
 
-	local curev = self[event]
-	local kind = type(curev)
-	if(curev) then
-		if(kind == 'function' and curev ~= func) then
-			self[event] = setmetatable({curev, func}, event_metatable)
-		elseif(kind == 'table') then
-			for _, infunc in next, curev do
-				if(infunc == func) then return end
-			end
+  local curev = self[event]
+  local kind = type(curev)
+  if(curev) then
+    if(kind == 'function' and curev ~= func) then
+      self[event] = setmetatable({curev, func}, event_metatable)
+    elseif(kind == 'table') then
+      for _, infunc in next, curev do
+        if(infunc == func) then return end
+      end
 
-			table.insert(curev, func)
-		end
-	else
-		self[event] = func
+      table.insert(curev, func)
+    end
+  else
+    self[event] = func
 
-		if(not self:GetScript('OnEvent')) then
-			self:SetScript('OnEvent', onEvent)
-		end
+    if(not self:GetScript('OnEvent')) then
+      self:SetScript('OnEvent', onEvent)
+    end
 
-		registerEvent(self, event)
-	end
+    registerEvent(self, event)
+  end
 end
 
 --[[ Events: frame:UnregisterEvent(event, func)
@@ -91,30 +91,30 @@ Used to remove a function from the event handler list for a game event.
           the frame will be unregistered for the event (function)
 --]]
 function frame_metatable.__index:UnregisterEvent(event, func)
-	argcheck(event, 2, 'string')
+  argcheck(event, 2, 'string')
 
-	local cleanUp = false
-	local curev = self[event]
-	if(type(curev) == 'table' and func) then
-		for k, infunc in next, curev do
-			if(infunc == func) then
-				curev[k] = nil
+  local cleanUp = false
+  local curev = self[event]
+  if(type(curev) == 'table' and func) then
+    for k, infunc in next, curev do
+      if(infunc == func) then
+        curev[k] = nil
 
-				break
-			end
-		end
+        break
+      end
+    end
 
-		if(not next(curev)) then
-			cleanUp = true
-		end
-	end
+    if(not next(curev)) then
+      cleanUp = true
+    end
+  end
 
-	if(cleanUp or curev == func) then
-		self[event] = nil
-		if(self.unitEvents) then
-			self.unitEvents[event] = nil
-		end
+  if(cleanUp or curev == func) then
+    self[event] = nil
+    if(self.unitEvents) then
+      self.unitEvents[event] = nil
+    end
 
-		unregisterEvent(self, event)
-	end
+    unregisterEvent(self, event)
+  end
 end

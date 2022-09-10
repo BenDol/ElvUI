@@ -62,173 +62,173 @@ local HealComm = LibStub("LibHealComm-4.0")
 local enabledUF, enabled = {}
 
 local function Update(self)
-	local unit = self.unit
-	local element = self.HealCommBar
+  local unit = self.unit
+  local element = self.HealCommBar
 
-	--[[ Callback: HealthPrediction:PreUpdate(unit)
-	Called before the element has been updated.
+  --[[ Callback: HealthPrediction:PreUpdate(unit)
+  Called before the element has been updated.
 
-	* self - the HealthPrediction element
-	* unit - the unit for which the update has been triggered (string)
-	--]]
-	if element.PreUpdate then
-		element:PreUpdate(unit)
-	end
+  * self - the HealthPrediction element
+  * unit - the unit for which the update has been triggered (string)
+  --]]
+  if element.PreUpdate then
+    element:PreUpdate(unit)
+  end
 
-	local guid = UnitGUID(unit)
-	local timeFrame = self.HealCommTimeframe and GetTime() + self.HealCommTimeframe or nil
-	local myIncomingHeal = HealComm:GetHealAmount(guid, HealComm.ALL_HEALS, timeFrame, UnitGUID("player")) or 0
-	local allIncomingHeal = HealComm:GetHealAmount(guid, HealComm.ALL_HEALS, timeFrame) or 0
-	local health = UnitHealth(unit)
-	local maxHealth = UnitHealthMax(unit)
-	local maxOverflowHP = maxHealth * element.maxOverflow
-	local otherIncomingHeal = 0
+  local guid = UnitGUID(unit)
+  local timeFrame = self.HealCommTimeframe and GetTime() + self.HealCommTimeframe or nil
+  local myIncomingHeal = HealComm:GetHealAmount(guid, HealComm.ALL_HEALS, timeFrame, UnitGUID("player")) or 0
+  local allIncomingHeal = HealComm:GetHealAmount(guid, HealComm.ALL_HEALS, timeFrame) or 0
+  local health = UnitHealth(unit)
+  local maxHealth = UnitHealthMax(unit)
+  local maxOverflowHP = maxHealth * element.maxOverflow
+  local otherIncomingHeal = 0
 
-	if health + allIncomingHeal > maxOverflowHP then
-		allIncomingHeal = maxOverflowHP - health
-	end
+  if health + allIncomingHeal > maxOverflowHP then
+    allIncomingHeal = maxOverflowHP - health
+  end
 
-	if allIncomingHeal < myIncomingHeal then
-		myIncomingHeal = allIncomingHeal
-	else
-		otherIncomingHeal = allIncomingHeal - myIncomingHeal
-	end
+  if allIncomingHeal < myIncomingHeal then
+    myIncomingHeal = allIncomingHeal
+  else
+    otherIncomingHeal = allIncomingHeal - myIncomingHeal
+  end
 
-	if element.myBar then
-		element.myBar:SetMinMaxValues(0, maxHealth)
-		element.myBar:SetValue(myIncomingHeal)
-		element.myBar:Show()
-	end
+  if element.myBar then
+    element.myBar:SetMinMaxValues(0, maxHealth)
+    element.myBar:SetValue(myIncomingHeal)
+    element.myBar:Show()
+  end
 
-	if element.otherBar then
-		element.otherBar:SetMinMaxValues(0, maxHealth)
-		element.otherBar:SetValue(otherIncomingHeal)
-		element.otherBar:Show()
-	end
+  if element.otherBar then
+    element.otherBar:SetMinMaxValues(0, maxHealth)
+    element.otherBar:SetValue(otherIncomingHeal)
+    element.otherBar:Show()
+  end
 
-	--[[ Callback: HealthPrediction:PostUpdate(unit, myIncomingHeal, otherIncomingHeal)
-	Called after the element has been updated.
+  --[[ Callback: HealthPrediction:PostUpdate(unit, myIncomingHeal, otherIncomingHeal)
+  Called after the element has been updated.
 
-	* self              - the HealthPrediction element
-	* unit              - the unit for which the update has been triggered (string)
-	* myIncomingHeal    - the amount of incoming healing done by the player (number)
-	* otherIncomingHeal - the amount of incoming healing done by others (number)
-	--]]
-	if element.PostUpdate then
-		return element:PostUpdate(unit, myIncomingHeal, otherIncomingHeal)
-	end
+  * self              - the HealthPrediction element
+  * unit              - the unit for which the update has been triggered (string)
+  * myIncomingHeal    - the amount of incoming healing done by the player (number)
+  * otherIncomingHeal - the amount of incoming healing done by others (number)
+  --]]
+  if element.PostUpdate then
+    return element:PostUpdate(unit, myIncomingHeal, otherIncomingHeal)
+  end
 end
 
 local function Path(self, ...)
-	--[[ Override: HealthPrediction.Override(self, event, unit)
-	Used to completely override the internal update function.
+  --[[ Override: HealthPrediction.Override(self, event, unit)
+  Used to completely override the internal update function.
 
-	* self  - the parent object
-	* event - the event triggering the update (string)
-	* unit  - the unit accompanying the event
-	--]]
-	return (self.HealCommBar.Override or Update) (self, ...)
+  * self  - the parent object
+  * event - the event triggering the update (string)
+  * unit  - the unit accompanying the event
+  --]]
+  return (self.HealCommBar.Override or Update) (self, ...)
 end
 
 local function ForceUpdate(element)
-	return Path(element.__owner, "ForceUpdate", element.__owner.unit)
+  return Path(element.__owner, "ForceUpdate", element.__owner.unit)
 end
 
 local function MultiUpdate(...)
-	for i = 1, select("#", ...) do
-		for j = 1, #enabledUF do
-			local frame = enabledUF[j]
+  for i = 1, select("#", ...) do
+    for j = 1, #enabledUF do
+      local frame = enabledUF[j]
 
-			if frame.unit and frame:IsVisible() and UnitGUID(frame.unit) == select(i, ...) then
-				Path(frame)
-			end
-		end
-	end
+      if frame.unit and frame:IsVisible() and UnitGUID(frame.unit) == select(i, ...) then
+        Path(frame)
+      end
+    end
+  end
 end
 
 local function HealComm_Heal_Update(event, casterGUID, spellID, healType, _, ...)
-	MultiUpdate(...)
+  MultiUpdate(...)
 end
 
 local function HealComm_Modified(event, guid)
-	MultiUpdate(guid)
+  MultiUpdate(guid)
 end
 
 local function ToggleCallbacks(toggle)
-	if toggle and not enabled and #enabledUF > 0 then
-		HealComm.RegisterCallback("oUF_HealComm", "HealComm_HealStarted", HealComm_Heal_Update)
-		HealComm.RegisterCallback("oUF_HealComm", "HealComm_HealUpdated", HealComm_Heal_Update)
-		HealComm.RegisterCallback("oUF_HealComm", "HealComm_HealDelayed", HealComm_Heal_Update)
-		HealComm.RegisterCallback("oUF_HealComm", "HealComm_HealStopped", HealComm_Heal_Update)
-		HealComm.RegisterCallback("oUF_HealComm", "HealComm_ModifierChanged", HealComm_Modified)
-		HealComm.RegisterCallback("oUF_HealComm", "HealComm_GUIDDisappeared", HealComm_Modified)
+  if toggle and not enabled and #enabledUF > 0 then
+    HealComm.RegisterCallback("oUF_HealComm", "HealComm_HealStarted", HealComm_Heal_Update)
+    HealComm.RegisterCallback("oUF_HealComm", "HealComm_HealUpdated", HealComm_Heal_Update)
+    HealComm.RegisterCallback("oUF_HealComm", "HealComm_HealDelayed", HealComm_Heal_Update)
+    HealComm.RegisterCallback("oUF_HealComm", "HealComm_HealStopped", HealComm_Heal_Update)
+    HealComm.RegisterCallback("oUF_HealComm", "HealComm_ModifierChanged", HealComm_Modified)
+    HealComm.RegisterCallback("oUF_HealComm", "HealComm_GUIDDisappeared", HealComm_Modified)
 
-		enabled = true
-	elseif not toggle and enabled and #enabledUF == 0 then
-		HealComm.UnregisterCallback("oUF_HealComm", "HealComm_HealStarted")
-		HealComm.UnregisterCallback("oUF_HealComm", "HealComm_HealUpdated")
-		HealComm.UnregisterCallback("oUF_HealComm", "HealComm_HealDelayed")
-		HealComm.UnregisterCallback("oUF_HealComm", "HealComm_HealStopped")
-		HealComm.UnregisterCallback("oUF_HealComm", "HealComm_ModifierChanged")
-		HealComm.UnregisterCallback("oUF_HealComm", "HealComm_GUIDDisappeared")
+    enabled = true
+  elseif not toggle and enabled and #enabledUF == 0 then
+    HealComm.UnregisterCallback("oUF_HealComm", "HealComm_HealStarted")
+    HealComm.UnregisterCallback("oUF_HealComm", "HealComm_HealUpdated")
+    HealComm.UnregisterCallback("oUF_HealComm", "HealComm_HealDelayed")
+    HealComm.UnregisterCallback("oUF_HealComm", "HealComm_HealStopped")
+    HealComm.UnregisterCallback("oUF_HealComm", "HealComm_ModifierChanged")
+    HealComm.UnregisterCallback("oUF_HealComm", "HealComm_GUIDDisappeared")
 
-		enabled = nil
-	end
+    enabled = nil
+  end
 end
 
 local function Enable(self)
-	local element = self.HealCommBar
+  local element = self.HealCommBar
 
-	if element then
-		element.__owner = self
-		element.ForceUpdate = ForceUpdate
+  if element then
+    element.__owner = self
+    element.ForceUpdate = ForceUpdate
 
-		self:RegisterEvent("UNIT_HEALTH", Path)
-		self:RegisterEvent("UNIT_MAXHEALTH", Path)
+    self:RegisterEvent("UNIT_HEALTH", Path)
+    self:RegisterEvent("UNIT_MAXHEALTH", Path)
 
-		if not element.maxOverflow then
-			element.maxOverflow = 1.05
-		end
+    if not element.maxOverflow then
+      element.maxOverflow = 1.05
+    end
 
-		if element.myBar and element.myBar:IsObjectType("StatusBar") and not element.myBar:GetStatusBarTexture() then
-			element.myBar:SetStatusBarTexture([[Interface\TargetingFrame\UI-StatusBar]])
-		end
+    if element.myBar and element.myBar:IsObjectType("StatusBar") and not element.myBar:GetStatusBarTexture() then
+      element.myBar:SetStatusBarTexture([[Interface\TargetingFrame\UI-StatusBar]])
+    end
 
-		if element.otherBar and element.otherBar:IsObjectType("StatusBar") and not element.otherBar:GetStatusBarTexture() then
-			element.otherBar:SetStatusBarTexture([[Interface\TargetingFrame\UI-StatusBar]])
-		end
+    if element.otherBar and element.otherBar:IsObjectType("StatusBar") and not element.otherBar:GetStatusBarTexture() then
+      element.otherBar:SetStatusBarTexture([[Interface\TargetingFrame\UI-StatusBar]])
+    end
 
-		enabledUF[#enabledUF + 1] = self
-		ToggleCallbacks(true)
+    enabledUF[#enabledUF + 1] = self
+    ToggleCallbacks(true)
 
-		return true
-	end
+    return true
+  end
 end
 
 local function Disable(self)
-	local element = self.HealCommBar
+  local element = self.HealCommBar
 
-	if element then
-		if element.myBar then
-			element.myBar:Hide()
-		end
+  if element then
+    if element.myBar then
+      element.myBar:Hide()
+    end
 
-		if element.otherBar then
-			element.otherBar:Hide()
-		end
+    if element.otherBar then
+      element.otherBar:Hide()
+    end
 
-		self:UnregisterEvent("UNIT_HEALTH", Path)
-		self:UnregisterEvent("UNIT_MAXHEALTH", Path)
+    self:UnregisterEvent("UNIT_HEALTH", Path)
+    self:UnregisterEvent("UNIT_MAXHEALTH", Path)
 
-		for i = 1, #enabledUF do
-			if enabledUF[i] == self then
-				tremove(enabledUF, i)
-				break
-			end
-		end
+    for i = 1, #enabledUF do
+      if enabledUF[i] == self then
+        tremove(enabledUF, i)
+        break
+      end
+    end
 
-		ToggleCallbacks(false)
-	end
+    ToggleCallbacks(false)
+  end
 end
 
 oUF:AddElement("HealComm4", Path, Enable, Disable)

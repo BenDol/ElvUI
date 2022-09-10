@@ -43,119 +43,119 @@ local GetReadyCheckStatus = GetReadyCheckStatus
 local UnitExists = UnitExists
 
 local function OnFinished(self)
-	local element = self:GetParent()
-	element:Hide()
+  local element = self:GetParent()
+  element:Hide()
 
-	--[[ Callback: ReadyCheckIndicator:PostUpdateFadeOut()
-	Called after the element has been faded out.
+  --[[ Callback: ReadyCheckIndicator:PostUpdateFadeOut()
+  Called after the element has been faded out.
 
-	* self - the ReadyCheckIndicator element
-	--]]
-	if(element.PostUpdateFadeOut) then
-		element:PostUpdateFadeOut()
-	end
+  * self - the ReadyCheckIndicator element
+  --]]
+  if(element.PostUpdateFadeOut) then
+    element:PostUpdateFadeOut()
+  end
 end
 
 local function Update(self, event)
-	local element = self.ReadyCheckIndicator
+  local element = self.ReadyCheckIndicator
 
-	--[[ Callback: ReadyCheckIndicator:PreUpdate()
-	Called before the element has been updated.
+  --[[ Callback: ReadyCheckIndicator:PreUpdate()
+  Called before the element has been updated.
 
-	* self - the ReadyCheckIndicator element
-	--]]
-	if(element.PreUpdate) then
-		element:PreUpdate()
-	end
+  * self - the ReadyCheckIndicator element
+  --]]
+  if(element.PreUpdate) then
+    element:PreUpdate()
+  end
 
-	local unit = self.unit
-	local status = GetReadyCheckStatus(unit)
-	if(UnitExists(unit) and status) then
-		if(status == 'ready') then
-			element:SetTexture(element.readyTexture)
-		elseif(status == 'notready') then
-			element:SetTexture(element.notReadyTexture)
-		else
-			element:SetTexture(element.waitingTexture)
-		end
+  local unit = self.unit
+  local status = GetReadyCheckStatus(unit)
+  if(UnitExists(unit) and status) then
+    if(status == 'ready') then
+      element:SetTexture(element.readyTexture)
+    elseif(status == 'notready') then
+      element:SetTexture(element.notReadyTexture)
+    else
+      element:SetTexture(element.waitingTexture)
+    end
 
-		element.status = status
-		element:Show()
-	elseif(event ~= 'READY_CHECK_FINISHED') then
-		element.status = nil
-		element:Hide()
-	end
+    element.status = status
+    element:Show()
+  elseif(event ~= 'READY_CHECK_FINISHED') then
+    element.status = nil
+    element:Hide()
+  end
 
-	if(event == 'READY_CHECK_FINISHED') then
-		if(element.status == 'waiting') then
-			element:SetTexture(element.notReadyTexture)
-		end
+  if(event == 'READY_CHECK_FINISHED') then
+    if(element.status == 'waiting') then
+      element:SetTexture(element.notReadyTexture)
+    end
 
-		element.Animation:Play()
-	end
+    element.Animation:Play()
+  end
 
-	--[[ Callback: ReadyCheckIndicator:PostUpdate(status)
-	Called after the element has been updated.
+  --[[ Callback: ReadyCheckIndicator:PostUpdate(status)
+  Called after the element has been updated.
 
-	* self   - the ReadyCheckIndicator element
-	* status - the unit's ready check status (string?)['ready', 'notready', 'waiting']
-	--]]
-	if(element.PostUpdate) then
-		return element:PostUpdate(status)
-	end
+  * self   - the ReadyCheckIndicator element
+  * status - the unit's ready check status (string?)['ready', 'notready', 'waiting']
+  --]]
+  if(element.PostUpdate) then
+    return element:PostUpdate(status)
+  end
 end
 
 local function Path(self, ...)
-	--[[ Override: ReadyCheckIndicator.Override(self, event, ...)
-	Used to completely override the internal update function.
+  --[[ Override: ReadyCheckIndicator.Override(self, event, ...)
+  Used to completely override the internal update function.
 
-	* self  - the parent object
-	* event - the event triggering the update (string)
-	* ...   - the arguments accompanying the event
-	--]]
-	return (self.ReadyCheckIndicator.Override or Update) (self, ...)
+  * self  - the parent object
+  * event - the event triggering the update (string)
+  * ...   - the arguments accompanying the event
+  --]]
+  return (self.ReadyCheckIndicator.Override or Update) (self, ...)
 end
 
 local function ForceUpdate(element)
-	return Path(element.__owner, 'ForceUpdate')
+  return Path(element.__owner, 'ForceUpdate')
 end
 
 local function Enable(self, unit)
-	local element = self.ReadyCheckIndicator
-	if(element and (unit and (unit:sub(1, 5) == 'party' or unit:sub(1, 4) == 'raid'))) then
-		element.__owner = self
-		element.ForceUpdate = ForceUpdate
+  local element = self.ReadyCheckIndicator
+  if(element and (unit and (unit:sub(1, 5) == 'party' or unit:sub(1, 4) == 'raid'))) then
+    element.__owner = self
+    element.ForceUpdate = ForceUpdate
 
-		element.readyTexture = element.readyTexture or READY_CHECK_READY_TEXTURE
-		element.notReadyTexture = element.notReadyTexture or READY_CHECK_NOT_READY_TEXTURE
-		element.waitingTexture = element.waitingTexture or READY_CHECK_WAITING_TEXTURE
+    element.readyTexture = element.readyTexture or READY_CHECK_READY_TEXTURE
+    element.notReadyTexture = element.notReadyTexture or READY_CHECK_NOT_READY_TEXTURE
+    element.waitingTexture = element.waitingTexture or READY_CHECK_WAITING_TEXTURE
 
-		local AnimationGroup = element:CreateAnimationGroup()
-		AnimationGroup:HookScript('OnFinished', OnFinished)
-		element.Animation = AnimationGroup
+    local AnimationGroup = element:CreateAnimationGroup()
+    AnimationGroup:HookScript('OnFinished', OnFinished)
+    element.Animation = AnimationGroup
 
-		local Animation = AnimationGroup:CreateAnimation('Alpha')
-		Animation:SetChange(-1)
-		Animation:SetDuration(element.fadeTime or 1.5)
-		Animation:SetStartDelay(element.finishedTime or 10)
+    local Animation = AnimationGroup:CreateAnimation('Alpha')
+    Animation:SetChange(-1)
+    Animation:SetDuration(element.fadeTime or 1.5)
+    Animation:SetStartDelay(element.finishedTime or 10)
 
-		self:RegisterEvent('READY_CHECK', Path, true)
-		self:RegisterEvent('READY_CHECK_CONFIRM', Path, true)
-		self:RegisterEvent('READY_CHECK_FINISHED', Path, true)
+    self:RegisterEvent('READY_CHECK', Path, true)
+    self:RegisterEvent('READY_CHECK_CONFIRM', Path, true)
+    self:RegisterEvent('READY_CHECK_FINISHED', Path, true)
 
-		return true
-	end
+    return true
+  end
 end
 
 local function Disable(self)
-	local element = self.ReadyCheckIndicator
-	if(element) then
-		element:Hide()
+  local element = self.ReadyCheckIndicator
+  if(element) then
+    element:Hide()
 
-		self:UnregisterEvent('READY_CHECK', Path)
-		self:UnregisterEvent('READY_CHECK_CONFIRM', Path)
-		self:UnregisterEvent('READY_CHECK_FINISHED', Path)
-	end
+    self:UnregisterEvent('READY_CHECK', Path)
+    self:UnregisterEvent('READY_CHECK_CONFIRM', Path)
+    self:UnregisterEvent('READY_CHECK_FINISHED', Path)
+  end
 end
 
 oUF:AddElement('ReadyCheckIndicator', Path, Enable, Disable)

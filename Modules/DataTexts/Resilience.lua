@@ -15,24 +15,24 @@ local displayNumberString = ""
 local lastPanel
 
 local function OnEvent(self)
-	lastPanel = self
+  lastPanel = self
 
-	local melee = GetCombatRating(CR_CRIT_TAKEN_MELEE)
-	local ranged = GetCombatRating(CR_CRIT_TAKEN_RANGED)
-	local spell = GetCombatRating(CR_CRIT_TAKEN_SPELL)
+  local melee = GetCombatRating(CR_CRIT_TAKEN_MELEE)
+  local ranged = GetCombatRating(CR_CRIT_TAKEN_RANGED)
+  local spell = GetCombatRating(CR_CRIT_TAKEN_SPELL)
 
-	local minResilience = min(melee, ranged)
-	minResilience = min(minResilience, spell)
+  local minResilience = min(melee, ranged)
+  minResilience = min(minResilience, spell)
 
-	self.text:SetFormattedText(displayNumberString, minResilience)
+  self.text:SetFormattedText(displayNumberString, minResilience)
 end
 
 local function ValueColorUpdate(hex)
-	displayNumberString = join("", STAT_RESILIENCE, ": ", hex, "%d|r")
+  displayNumberString = join("", STAT_RESILIENCE, ": ", hex, "%d|r")
 
-	if lastPanel ~= nil then
-		OnEvent(lastPanel)
-	end
+  if lastPanel ~= nil then
+    OnEvent(lastPanel)
+  end
 end
 E.valueColorUpdateFuncs[ValueColorUpdate] = true
 

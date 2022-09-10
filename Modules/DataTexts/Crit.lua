@@ -25,52 +25,52 @@ local displayModifierString = ""
 local lastPanel
 
 local function OnEvent(self, event)
-	lastPanel = self
+  lastPanel = self
 
-	if event == "SPELL_UPDATE_USABLE" then
-		self:UnregisterEvent(event)
-	end
+  if event == "SPELL_UPDATE_USABLE" then
+    self:UnregisterEvent(event)
+  end
 
-	if E.Role == "Caster"then
-		critRating = GetSpellCritChance(2)
-	elseif E.myclass == "HUNTER" then
-		critRating = GetRangedCritChance()
-	else
-		critRating = GetCritChance()
-	end
+  if E.Role == "Caster"then
+    critRating = GetSpellCritChance(2)
+  elseif E.myclass == "HUNTER" then
+    critRating = GetRangedCritChance()
+  else
+    critRating = GetCritChance()
+  end
 
-	self.text:SetFormattedText(displayModifierString, critRating)
+  self.text:SetFormattedText(displayModifierString, critRating)
 end
 
 local function OnEnter(self)
-	DT:SetupTooltip(self)
+  DT:SetupTooltip(self)
 
-	local text, tooltip
-	if E.Role == "Caster" then
-		text = format("%s %.2f%%", format(PAPERDOLLFRAME_TOOLTIP_FORMAT, SPELL_CRIT_CHANCE), critRating)
-		tooltip = format("%s %d", COMBAT_RATING_NAME11, GetCombatRating(11))
-	else
-		if E.myclass == "HUNTER" then
-			text = format("%s %.2f%%", format(PAPERDOLLFRAME_TOOLTIP_FORMAT, RANGED_CRIT_CHANCE), critRating)
-			tooltip = format(CR_CRIT_RANGED_TOOLTIP, GetCombatRating(CR_CRIT_RANGED), GetCombatRatingBonus(CR_CRIT_RANGED))
-		else
-			text = format("%s %.2f%%", format(PAPERDOLLFRAME_TOOLTIP_FORMAT, MELEE_CRIT_CHANCE), critRating)
-			tooltip = format(CR_CRIT_MELEE_TOOLTIP, GetCombatRating(CR_CRIT_MELEE), GetCombatRatingBonus(CR_CRIT_MELEE))
-		end
-	end
+  local text, tooltip
+  if E.Role == "Caster" then
+    text = format("%s %.2f%%", format(PAPERDOLLFRAME_TOOLTIP_FORMAT, SPELL_CRIT_CHANCE), critRating)
+    tooltip = format("%s %d", COMBAT_RATING_NAME11, GetCombatRating(11))
+  else
+    if E.myclass == "HUNTER" then
+      text = format("%s %.2f%%", format(PAPERDOLLFRAME_TOOLTIP_FORMAT, RANGED_CRIT_CHANCE), critRating)
+      tooltip = format(CR_CRIT_RANGED_TOOLTIP, GetCombatRating(CR_CRIT_RANGED), GetCombatRatingBonus(CR_CRIT_RANGED))
+    else
+      text = format("%s %.2f%%", format(PAPERDOLLFRAME_TOOLTIP_FORMAT, MELEE_CRIT_CHANCE), critRating)
+      tooltip = format(CR_CRIT_MELEE_TOOLTIP, GetCombatRating(CR_CRIT_MELEE), GetCombatRatingBonus(CR_CRIT_MELEE))
+    end
+  end
 
-	DT.tooltip:AddLine(text, 1, 1, 1)
-	DT.tooltip:AddLine(tooltip, nil, nil, nil, 1)
+  DT.tooltip:AddLine(text, 1, 1, 1)
+  DT.tooltip:AddLine(tooltip, nil, nil, nil, 1)
 
-	DT.tooltip:Show()
+  DT.tooltip:Show()
 end
 
 local function ValueColorUpdate(hex)
-	displayModifierString = join("", CRIT_ABBR, ": ", hex, "%.2f%%|r")
+  displayModifierString = join("", CRIT_ABBR, ": ", hex, "%.2f%%|r")
 
-	if lastPanel ~= nil then
-		OnEvent(lastPanel)
-	end
+  if lastPanel ~= nil then
+    OnEvent(lastPanel)
+  end
 end
 E.valueColorUpdateFuncs[ValueColorUpdate] = true
 

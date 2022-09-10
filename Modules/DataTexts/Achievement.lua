@@ -12,20 +12,20 @@ local displayNumberString = ""
 local lastPanel
 
 local function OnEvent(self)
-	lastPanel = self
-	self.text:SetFormattedText(displayNumberString, GetTotalAchievementPoints())
+  lastPanel = self
+  self.text:SetFormattedText(displayNumberString, GetTotalAchievementPoints())
 end
 
 local function OnClick()
-	ToggleAchievementFrame()
+  ToggleAchievementFrame()
 end
 
 local function ValueColorUpdate(hex)
-	displayNumberString = join("", ACHIEVEMENTS, ": ", hex, "%d|r")
+  displayNumberString = join("", ACHIEVEMENTS, ": ", hex, "%d|r")
 
-	if lastPanel ~= nil then
-		OnEvent(lastPanel)
-	end
+  if lastPanel ~= nil then
+    OnEvent(lastPanel)
+  end
 end
 E.valueColorUpdateFuncs[ValueColorUpdate] = true
 
