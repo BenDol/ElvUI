@@ -1,5 +1,8 @@
 local E, _, V, P, G = unpack(ElvUI); --Import: Engine, Locales, PrivateDB, ProfileDB, GlobalDB
 local C, L = unpack(select(2, ...))
+
+E:GetModule("Options"):AddGroup("DataTexts", function(OPT)
+
 local DT = E:GetModule("DataTexts")
 local Layout = E:GetModule("Layout")
 local Chat = E:GetModule("Chat")
@@ -387,3 +390,5 @@ E.Options.args.datatexts = {
 }
 
 DT:PanelLayoutOptions()
+
+end)

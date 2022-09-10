@@ -1,5 +1,8 @@
 local E, _, V, P, G = unpack(ElvUI); --Import: Engine, Locales, PrivateDB, ProfileDB, GlobalDB
-local _, L = unpack(select(2, ...))
+local C, L = unpack(select(2, ...))
+
+E:GetModule("Options"):AddGroup("Filters", function(OPT)
+
 local UF = E:GetModule("UnitFrames")
 
 local type, pairs, tonumber, tostring = type, pairs, tonumber, tostring
@@ -1459,3 +1462,5 @@ function E:SetToFilterConfig(filter)
 	UpdateFilterGroup()
 	E.Libs.AceConfigDialog:SelectGroup("ElvUI", "filters")
 end
+
+end)

@@ -1,5 +1,8 @@
 local E, _, V, P, G = unpack(ElvUI); --Import: Engine, Locales, PrivateDB, ProfileDB, GlobalDB
 local C, L = unpack(select(2, ...))
+
+E:GetModule("Options"):AddGroup("Auras", function(OPT)
+
 local A = E:GetModule("Auras")
 local RB = E:GetModule("ReminderBuffs")
 local M = E:GetModule("Minimap")
@@ -400,3 +403,5 @@ E.Options.args.auras = {
 		}
 	}
 }
+
+end)

@@ -1,5 +1,8 @@
 local E, _, V, P, G = unpack(ElvUI); --Import: Engine, Locales, PrivateDB, ProfileDB, GlobalDB
 local C, L = unpack(select(2, ...))
+
+E:GetModule("Options"):AddGroup("General", function(OPT)
+
 local Misc = E:GetModule("Misc")
 local Layout = E:GetModule("Layout")
 local Totems = E:GetModule("Totems")
@@ -709,3 +712,5 @@ E.Options.args.general = {
 		}
 	}
 }
+
+end)

@@ -1,5 +1,8 @@
 local E, _, V, P, G = unpack(ElvUI); --Import: Engine, Locales, PrivateDB, ProfileDB, GlobalDB
 local C, L = unpack(select(2, ...))
+
+E:GetModule("Options"):AddGroup("Nameplates", function(OPT)
+
 local NP = E:GetModule("NamePlates")
 local ACD = E.Libs.AceConfigDialog
 
@@ -4293,3 +4296,5 @@ for i = 1, 5 do
 		end
 	}
 end
+
+end)

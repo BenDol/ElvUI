@@ -1,5 +1,7 @@
 local E, _, V, P, G = unpack(ElvUI); --Import: Engine, Locales, PrivateDB, ProfileDB, GlobalDB
-local _, L = unpack(select(2, ...))
+local C, L = unpack(select(2, ...))
+
+E:GetModule("Options"):AddGroup("Tags", function(OPT)
 
 local format = format
 
@@ -70,3 +72,5 @@ for Tag in next, E.oUF.Tags.Methods do
 		get = function() return format("[%s]", Tag) end,
 	}
 end
+
+end)

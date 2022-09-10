@@ -1,6 +1,8 @@
 local E, _, V, P, G = unpack(ElvUI); --Import: Engine, Locales, PrivateDB, ProfileDB, GlobalDB
 local C, L = unpack(select(2, ...))
 
+E:GetModule("Options"):AddGroup("Cooldown", function(OPT)
+
 local pairs = pairs
 
 local function profile(db)
@@ -315,3 +317,5 @@ group(7,	"actionbar",	L["ActionBars"])
 group(8,	"bags",			L["Bags"])
 group(9,	"nameplates",	L["NamePlates"])
 group(10,	"unitframe",	L["UnitFrames"])
+
+end)

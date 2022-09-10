@@ -17,5 +17,3 @@ Settings\Config.xml
 Core\Core.xml
 Layout\Layout.xml
 Modules\Modules.xml
-
-Options\Options.xml

@@ -1,5 +1,8 @@
 local E, _, V, P, G = unpack(ElvUI); --Import: Engine, Locales, PrivateDB, ProfileDB, GlobalDB
 local C, L = unpack(select(2, ...))
+
+E:GetModule("Options"):AddGroup("Bags", function(OPT)
+
 local B = E:GetModule("Bags")
 
 local _G = _G
@@ -855,3 +858,5 @@ E.Options.args.bags = {
 		}
 	}
 }
+
+end)

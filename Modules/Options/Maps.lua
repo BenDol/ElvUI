@@ -1,5 +1,8 @@
 local E, _, V, P, G = unpack(ElvUI); --Import: Engine, Locales, PrivateDB, ProfileDB, GlobalDB
 local C, L = unpack(select(2, ...))
+
+E:GetModule("Options"):AddGroup("Maps", function(OPT)
+
 local WM = E:GetModule("WorldMap")
 local MM = E:GetModule("Minimap")
 local AB = E:GetModule("ActionBars")
@@ -579,3 +582,5 @@ E.Options.args.maps = {
 		}
 	}
 }
+
+end)

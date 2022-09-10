@@ -1,5 +1,8 @@
 local E, _, V, P, G = unpack(ElvUI); --Import: Engine, Locales, PrivateDB, ProfileDB, GlobalDB
-local _, L = unpack(select(2, ...))
+local C, L = unpack(select(2, ...))
+
+E:GetModule("Options"):AddGroup("ModuleControl", function(OPT)
+
 local UF = E:GetModule("UnitFrames")
 local MC = E:GetModule("ModuleCopy")
 
@@ -607,3 +610,5 @@ E.Options.args.modulecontrol= {
 		}
 	}
 }
+
+end)

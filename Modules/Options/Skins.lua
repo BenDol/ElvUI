@@ -1,5 +1,7 @@
 local E, _, V, P, G = unpack(ElvUI); --Import: Engine, Locales, PrivateDB, ProfileDB, GlobalDB
-local _, L = unpack(select(2, ...))
+local C, L = unpack(select(2, ...))
+
+E:GetModule("Options"):AddGroup("Skins", function(OPT)
 
 E.Options.args.skins = {
 	type = "group",
@@ -307,3 +309,5 @@ E.Options.args.skins = {
 		}
 	}
 }
+
+end)

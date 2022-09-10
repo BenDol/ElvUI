@@ -12,4 +12,5 @@
 	<Include file="Misc\Load_Misc.xml"/>
 	<Include file="Skins\Load_Skins.xml"/>
 	<Include file="Blizzard\Load_Blizzard.xml"/>
+	<Include file="Options\Options.xml"/>
 </Ui>

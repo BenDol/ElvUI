@@ -1,5 +1,8 @@
 local E, _, V, P, G = unpack(ElvUI); --Import: Engine, Locales, PrivateDB, ProfileDB, GlobalDB
 local C, L = unpack(select(2, ...))
+
+E:GetModule("Options"):AddGroup("Tooltip", function(OPT)
+
 local TT = E:GetModule("Tooltip")
 
 local tonumber = tonumber
@@ -365,3 +368,5 @@ for i = 1, 8 do
 		disabled = function() return not E.Tooltip.Initialized or not E.db.tooltip.useCustomFactionColors end,
 	}
 end
+
+end)
