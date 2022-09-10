@@ -11,6 +11,7 @@ S:AddCallback("Skin_Tabard", function()
   TabardFrame:CreateBackdrop("Transparent")
   TabardFrame.backdrop:Point("TOPLEFT", 11, -12)
   TabardFrame.backdrop:Point("BOTTOMRIGHT", -32, 76)
+  E:EnableMovable("TabardFrame")
 
   S:SetUIPanelWindowInfo(TabardFrame, "width")
   S:SetBackdropHitRect(TabardFrame)

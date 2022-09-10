@@ -10,6 +10,7 @@ S:AddCallbackForAddon("Blizzard_BindingUI", "Skin_Blizzard_BindingUI", function(
   KeyBindingFrame:StripTextures()
   KeyBindingFrame:SetTemplate("Transparent")
   KeyBindingFrame:Size(596, 490)
+  E:EnableMovable("KeyBindingFrame")
 
   local bindingKey1, bindingKey2
   for i = 1, KEY_BINDINGS_DISPLAYED do

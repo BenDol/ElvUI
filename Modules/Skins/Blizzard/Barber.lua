@@ -10,6 +10,7 @@ S:AddCallbackForAddon("Blizzard_BarbershopUI", "Skin_Blizzard_BarbershopUI", fun
   BarberShopFrame:CreateBackdrop("Transparent")
   BarberShopFrame.backdrop:Point("TOPLEFT", 44, -70)
   BarberShopFrame.backdrop:Point("BOTTOMRIGHT", -38, 42)
+  E:EnableMovable("BarberShopFrame")
 
   S:SetBackdropHitRect(BarberShopFrame)
 

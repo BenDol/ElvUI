@@ -16,6 +16,7 @@ S:AddCallback("Skin_Stable", function()
   PetStableFrame:CreateBackdrop("Transparent")
   PetStableFrame.backdrop:Point("TOPLEFT", 11, -12)
   PetStableFrame.backdrop:Point("BOTTOMRIGHT", -32, 76)
+  E:EnableMovable("PetStableFrame")
 
   S:SetUIPanelWindowInfo(PetStableFrame, "width")
   S:SetBackdropHitRect(PetStableFrame)

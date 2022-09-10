@@ -19,6 +19,7 @@ S:AddCallback("Skin_Merchant", function()
   MerchantFrame:CreateBackdrop("Transparent")
   MerchantFrame.backdrop:Point("TOPLEFT", 11, -12)
   MerchantFrame.backdrop:Point("BOTTOMRIGHT", -32, 76)
+  E:EnableMovable("MerchantFrame")
 
   S:SetUIPanelWindowInfo(MerchantFrame, "width")
   S:SetBackdropHitRect(MerchantFrame)

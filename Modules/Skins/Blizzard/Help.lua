@@ -13,6 +13,7 @@ S:AddCallback("Skin_Help", function()
   HelpFrame:CreateBackdrop("Transparent")
   HelpFrame.backdrop:Point("TOPLEFT", 6, 0)
   HelpFrame.backdrop:Point("BOTTOMRIGHT", -45, 14)
+  E:EnableMovable("HelpFrame")
 
   S:SetBackdropHitRect(HelpFrame)
 

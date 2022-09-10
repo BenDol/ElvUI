@@ -25,6 +25,7 @@ S:AddCallback("Skin_Mail", function()
   MailFrame:CreateBackdrop("Transparent")
   MailFrame.backdrop:Point("TOPLEFT", 11, -12)
   MailFrame.backdrop:Point("BOTTOMRIGHT", -32, 76)
+  E:EnableMovable("MailFrame")
 
   S:SetUIPanelWindowInfo(MailFrame, "width")
   S:SetBackdropHitRect(MailFrame)

@@ -14,6 +14,7 @@ S:AddCallbackForAddon("Blizzard_TrainerUI", "Skin_Blizzard_TrainerUI", function(
   ClassTrainerFrame:CreateBackdrop("Transparent")
   ClassTrainerFrame.backdrop:Point("TOPLEFT", 11, -12)
   ClassTrainerFrame.backdrop:Point("BOTTOMRIGHT", -32, 76)
+  E:EnableMovable("ClassTrainerFrame")
 
   S:SetUIPanelWindowInfo(ClassTrainerFrame, "width")
   S:SetBackdropHitRect(ClassTrainerFrame)

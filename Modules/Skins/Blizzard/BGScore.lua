@@ -16,6 +16,7 @@ S:AddCallback("Skin_WorldStateScore", function()
   WorldStateScoreFrame:CreateBackdrop("Transparent")
   WorldStateScoreFrame.backdrop:Point("TOPLEFT", 10, -15)
   WorldStateScoreFrame.backdrop:Point("BOTTOMRIGHT", -113, 67)
+  E:EnableMovable("WorldStateScoreFrame")
 
   WorldStateScoreFrame:EnableMouse(true)
   S:SetBackdropHitRect(WorldStateScoreFrame)

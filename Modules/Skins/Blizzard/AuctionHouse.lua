@@ -17,6 +17,7 @@ S:AddCallbackForAddon("Blizzard_AuctionUI", "Skin_Blizzard_AuctionUI", function(
   AuctionFrame:CreateBackdrop("Transparent")
   AuctionFrame.backdrop:Point("TOPLEFT", 11, 0)
   AuctionFrame.backdrop:Point("BOTTOMRIGHT", 0, 23)
+  E:EnableMovable("AuctionFrame")
 
   S:HookScript(AuctionFrame, "OnShow", function(self)
     S:SetUIPanelWindowInfo(self, "xoffset", 0, nil, true)

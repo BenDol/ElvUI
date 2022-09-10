@@ -12,6 +12,7 @@ S:AddCallback("Skin_PvP", function()
   PVPParentFrame:CreateBackdrop("Transparent")
   PVPParentFrame.backdrop:Point("TOPLEFT", 11, -12)
   PVPParentFrame.backdrop:Point("BOTTOMRIGHT", -32, 76)
+  E:EnableMovable("PVPParentFrame")
 
   S:SetUIPanelWindowInfo(PVPParentFrame, "width")
   S:SetBackdropHitRect(PVPParentFrame)

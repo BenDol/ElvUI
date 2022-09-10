@@ -12,6 +12,7 @@ S:AddCallbackForAddon("Blizzard_GMChatUI", "Skin_Blizzard_GMChatUI", function()
   GMChatFrame:CreateBackdrop("Transparent")
   GMChatFrame.backdrop:Point("TOPLEFT", -2, 7)
   GMChatFrame.backdrop:Point("BOTTOMRIGHT", 2, -6)
+  E:EnableMovable("GMChatFrame")
 
   GMChatFrame:SetClampRectInsets(-6, 6, 33, -10)
   GMChatFrame:Size(LeftChatPanel:GetWidth() - 4, 120)

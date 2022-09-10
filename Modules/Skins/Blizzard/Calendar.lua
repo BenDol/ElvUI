@@ -16,6 +16,7 @@ S:AddCallbackForAddon("Blizzard_Calendar", "Skin_Blizzard_Calendar", function()
   CalendarFrame:CreateBackdrop("Transparent")
   CalendarFrame.backdrop:Point("TOPLEFT", 3, -7)
   CalendarFrame.backdrop:Point("BOTTOMRIGHT", -2, -4)
+  E:EnableMovable("CalendarFrame")
 
   S:SecureHook("Calendar_Show", function()
     S:SetUIPanelWindowInfo(CalendarFrame, "xoffset", 8, nil, true)

@@ -25,6 +25,7 @@ S:AddCallbackForAddon("Blizzard_TradeSkillUI", "Skin_Blizzard_TradeSkillUI", fun
 
   TradeSkillFrame:StripTextures(true)
   TradeSkillFrame:Width(713)
+  E:EnableMovable("TradeSkillFrame")
 
   TradeSkillFrame:CreateBackdrop("Transparent")
   TradeSkillFrame.backdrop:Point("TOPLEFT", 11, -12)

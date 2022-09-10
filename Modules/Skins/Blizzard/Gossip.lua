@@ -17,6 +17,7 @@ S:AddCallback("Skin_Gossip", function()
   GossipFrame:CreateBackdrop("Transparent")
   GossipFrame.backdrop:Point("TOPLEFT", 11, -12)
   GossipFrame.backdrop:Point("BOTTOMRIGHT", -32, 0)
+  E:EnableMovable("GossipFrame")
 
   S:SetUIPanelWindowInfo(GossipFrame, "width")
   S:SetBackdropHitRect(GossipFrame)

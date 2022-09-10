@@ -13,6 +13,7 @@ S:AddCallback("Skin_Misc", function()
   -- ESC/Menu Buttons
   GameMenuFrame:StripTextures()
   GameMenuFrame:CreateBackdrop("Transparent")
+  E:EnableMovable("GameMenuFrame")
 
   GameMenuFrameHeader:Point("TOP", 0, 7)
 

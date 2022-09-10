@@ -18,6 +18,7 @@ S:AddCallback("Skin_LFD", function()
   LFDQueueFrame:CreateBackdrop("Transparent")
   LFDQueueFrame.backdrop:Point("TOPLEFT", 11, -12)
   LFDQueueFrame.backdrop:Point("BOTTOMRIGHT", -3, 4)
+  E:EnableMovable("LFDQueueFrame")
 
   S:HookScript(LFDParentFrame, "OnShow", function(self)
     S:SetUIPanelWindowInfo(self, "width", 341)

@@ -54,6 +54,7 @@ S:AddCallback("Skin_BlizzardOptions", function()
     frame:SetScript("OnDragStop", function(self)
       self:StopMovingOrSizing()
     end)
+    E:EnableMovable(frame:GetName())
   end
 
   local optionHeaders = {

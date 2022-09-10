@@ -150,6 +150,7 @@ S:AddCallbackForAddon("Blizzard_AchievementUI", "Skin_Blizzard_AchievementUI", f
   AchievementFrame:HookScript("OnShow", updatePanelInfo)
   AchievementFrameComparison:HookScript("OnShow", updatePanelInfo)
   AchievementFrameComparison:HookScript("OnHide", updatePanelInfo)
+  E:EnableMovable("AchievementFrame")
 
   S:HandleCloseButton(AchievementFrameCloseButton, AchievementFrame.backdrop)
 

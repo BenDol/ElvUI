@@ -392,6 +392,114 @@ function E:RequestBGInfo()
   RequestBattlefieldScoreData()
 end
 
+-- [ HookScript ]
+-- Securely post-hooks a script handler.
+-- 'f'          [frame]             the frame which needs a hook
+-- 'script'     [string]            the handler to hook
+-- 'func'       [function]          the function that should be added
+function HookScript(f, script, func)
+  local prev = f:GetScript(script)
+  f:SetScript(script, function(a1,a2,a3,a4,a5,a6,a7,a8,a9)
+    if prev then prev(a1,a2,a3,a4,a5,a6,a7,a8,a9) end
+    func(a1,a2,a3,a4,a5,a6,a7,a8,a9)
+  end)
+end
+
+-- [ Enable Movable ]
+-- Set all necessary functions to make a already existing frame movable.
+-- 'name'       [frame/string]  Name of the Frame that should be movable
+-- 'addon'      [string]        Addon that must be loaded before being able to access the frame
+-- 'blacklist'  [table]         A list of frames that should be deactivated for mouse usage
+local function OnDragStart() this:StartMoving() end
+local function OnDragStop() this:StopMovingOrSizing() end
+local function OnShow()
+  if not this.lastPoint then return end
+  this:ClearAllPoints()
+  this:Point(this.lastPoint[1], this.lastPoint[4], this.lastPoint[5])
+end
+local function OnHide()
+  this.lastPoint = {this:GetPoint()}
+end
+function E:EnableMovable(name, blacklist, dontSave, addon)
+  if addon then
+    local scan = CreateFrame("Frame")
+    scan:RegisterEvent("ADDON_LOADED")
+    scan:SetScript("OnEvent", function()
+      if arg1 == addon then
+        local frame = _G[name]
+
+        if blacklist then
+          for _, disable in pairs(blacklist) do
+            _G[disable]:EnableMouse(false)
+          end
+        end
+
+        frame:SetMovable(true)
+        frame:EnableMouse(true)
+        frame:RegisterForDrag("LeftButton")
+        frame:HookScript("OnDragStart", OnDragStart)
+        frame:HookScript("OnDragStop", OnDragStop)
+
+        if not dontSave then
+          frame:HookScript("OnShow", OnShow)
+          frame:HookScript("OnHide", OnHide)
+        end
+
+        this:UnregisterAllEvents()
+      end
+    end)
+  else
+    if blacklist then
+      for _, disable in pairs(blacklist) do
+        _G[disable]:EnableMouse(false)
+      end
+    end
+
+    local frame = name
+    if type(name) == "string" then frame = _G[name] end
+    frame:SetMovable(true)
+    frame:EnableMouse(true)
+    frame:RegisterForDrag("LeftButton")
+    frame:HookScript("OnDragStart", OnDragStart)
+    frame:HookScript("OnDragStop", OnDragStop)
+
+    if not dontSave then
+      frame:HookScript("OnShow", OnShow)
+      frame:HookScript("OnHide", OnHide)
+    end
+  end
+end
+
+-- [ EnableClickRotate ]
+-- Enables Modelframes to be rotated by click-drag
+-- 'frame'    [frame]         the modelframe that should be used
+function E:EnableClickRotate(frame)
+  frame:EnableMouse(true)
+  HookScript(frame, "OnUpdate", function()
+    if this.rotate then
+      local x,_ = GetCursorPosition()
+      if this.curx > x then
+        this.rotation = this.rotation - abs(x-this.curx) * 0.025
+      elseif this.curx < x then
+        this.rotation = this.rotation + abs(x-this.curx) * 0.025
+      end
+      this:SetRotation(this.rotation)
+      this.curx, this.cury = x, y
+    end
+  end)
+
+  HookScript(frame, "OnMouseDown", function()
+    if arg1 == "LeftButton" then
+      this.rotate = true
+      this.curx, this.cury = GetCursorPosition()
+    end
+  end)
+
+  HookScript(frame, "OnMouseUp", function()
+    this.rotate, this.curx, this.cury = nil, nil, nil
+  end)
+end
+
 function E:PLAYER_ENTERING_WORLD()
   if not self.MediaUpdated then
     self:UpdateMedia()

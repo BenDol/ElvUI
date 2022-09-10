@@ -16,6 +16,7 @@ S:AddCallbackForAddon("Blizzard_ItemSocketingUI", "Skin_Blizzard_ItemSocketingUI
   ItemSocketingFrame:CreateBackdrop("Transparent")
   ItemSocketingFrame.backdrop:Point("TOPLEFT", 11, -12)
   ItemSocketingFrame.backdrop:Point("BOTTOMRIGHT", -2, 31)
+  E:EnableMovable("ItemSocketingFrame")
 
   S:SetUIPanelWindowInfo(ItemSocketingFrame, "width")
   S:SetBackdropHitRect(ItemSocketingFrame)

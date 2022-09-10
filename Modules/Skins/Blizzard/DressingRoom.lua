@@ -11,6 +11,7 @@ S:AddCallback("Skin_DressingRoom", function()
   DressUpFrame:CreateBackdrop("Transparent")
   DressUpFrame.backdrop:Point("TOPLEFT", 11, -12)
   DressUpFrame.backdrop:Point("BOTTOMRIGHT", -32, 76)
+  E:EnableMovable("DressUpFrame")
 
   S:SetUIPanelWindowInfo(DressUpFrame, "width")
   S:SetBackdropHitRect(DressUpFrame)

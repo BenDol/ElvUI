@@ -25,6 +25,7 @@ S:AddCallback("Skin_Tutorial", function()
   TutorialFrame:CreateBackdrop("Transparent")
   TutorialFrame.backdrop:Point("TOPLEFT", 11, -12)
   TutorialFrame.backdrop:Point("BOTTOMRIGHT", -1, 2)
+  E:EnableMovable("TutorialFrame")
 
   TutorialFrameTitle:Point("TOP", 0, -19)
 

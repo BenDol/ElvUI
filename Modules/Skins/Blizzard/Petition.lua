@@ -11,6 +11,7 @@ S:AddCallback("Skin_Petition", function()
   PetitionFrame:CreateBackdrop("Transparent")
   PetitionFrame.backdrop:Point("TOPLEFT", 11, -12)
   PetitionFrame.backdrop:Point("BOTTOMRIGHT", -32, 76)
+  E:EnableMovable("PetitionFrame")
 
   S:SetUIPanelWindowInfo(PetitionFrame, "width")
   S:SetBackdropHitRect(PetitionFrame)

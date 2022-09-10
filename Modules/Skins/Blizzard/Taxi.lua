@@ -12,6 +12,7 @@ S:AddCallback("Skin_Taxi", function()
   TaxiFrame:CreateBackdrop("Transparent")
   TaxiFrame.backdrop:Point("TOPLEFT", 11, -12)
   TaxiFrame.backdrop:Point("BOTTOMRIGHT", -32, 76)
+  E:EnableMovable("TaxiFrame")
 
   S:SetUIPanelWindowInfo(TaxiFrame, "width")
   S:SetBackdropHitRect(TaxiFrame)

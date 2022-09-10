@@ -16,6 +16,7 @@ S:AddCallbackForAddon("Blizzard_InspectUI", "Skin_Blizzard_InspectUI", function(
   InspectFrame:CreateBackdrop("Transparent")
   InspectFrame.backdrop:Point("TOPLEFT", 11, -12)
   InspectFrame.backdrop:Point("BOTTOMRIGHT", -32, 76)
+  E:EnableMovable("InspectFrame")
 
   S:SetUIPanelWindowInfo(InspectFrame, "width")
 

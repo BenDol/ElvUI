@@ -212,6 +212,19 @@ function M:Initialize()
   WorldMapFrame:EnableMouse(false)
   WorldMapFrame.EnableMouse = E.noop
 
+  WorldMapFrame:SetScript("OnShow", function()
+    -- default events
+    UpdateMicroButtons()
+    PlaySound("igQuestLogOpen")
+    CloseDropDownMenus()
+    SetMapToCurrentZone()
+    WorldMapFrame_PingPlayerPosition()
+
+    -- customize
+    this:EnableKeyboard(false)
+    this:EnableMouseWheel(1)
+  end)
+
   if E.global.general.smallerWorldMap then
     BlackoutWorld:SetTexture(nil)
 

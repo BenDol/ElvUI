@@ -12,6 +12,7 @@ S:AddCallback("Skin_Arena", function()
   ArenaFrame:CreateBackdrop("Transparent")
   ArenaFrame.backdrop:Point("TOPLEFT", 11, -12)
   ArenaFrame.backdrop:Point("BOTTOMRIGHT", -32, 76)
+  E:EnableMovable("ArenaFrame")
 
   S:SetUIPanelWindowInfo(ArenaFrame, "width")
   S:SetBackdropHitRect(ArenaFrame)

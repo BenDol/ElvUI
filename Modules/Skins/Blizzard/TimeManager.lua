@@ -9,6 +9,7 @@ S:AddCallbackForAddon("Blizzard_TimeManager", "Skin_Blizzard_TimeManager", funct
 
   TimeManagerFrame:StripTextures()
   TimeManagerFrame:SetTemplate("Transparent")
+  E:EnableMovable("TimeManagerFrame")
 
   E:CreateMover(TimeManagerFrame, "TimeManagerFrameMover", TIMEMANAGER_TITLE)
   TimeManagerFrame.mover:SetFrameLevel(TimeManagerFrame:GetFrameLevel() + 4)

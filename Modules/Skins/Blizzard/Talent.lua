@@ -13,6 +13,7 @@ S:AddCallbackForAddon("Blizzard_TalentUI", "Skin_Blizzard_TalentUI", function()
   PlayerTalentFrame:CreateBackdrop("Transparent")
   PlayerTalentFrame.backdrop:Point("TOPLEFT", 11, -12)
   PlayerTalentFrame.backdrop:Point("BOTTOMRIGHT", -32, 76)
+  E:EnableMovable("PlayerTalentFrame")
 
   S:SetBackdropHitRect(PlayerTalentFrame)
 

@@ -11,6 +11,7 @@ S:AddCallback("Skin_GuildRegistrar", function()
   GuildRegistrarFrame:CreateBackdrop("Transparent")
   GuildRegistrarFrame.backdrop:Point("TOPLEFT", 11, -12)
   GuildRegistrarFrame.backdrop:Point("BOTTOMRIGHT", -32, 76)
+  E:EnableMovable("GuildRegistrarFrame")
 
   S:SetUIPanelWindowInfo(GuildRegistrarFrame, "width")
   S:SetBackdropHitRect(GuildRegistrarFrame)

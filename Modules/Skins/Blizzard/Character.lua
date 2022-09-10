@@ -31,6 +31,7 @@ S:AddCallback("Skin_Character", function()
   CharacterFrame:CreateBackdrop("Transparent")
   CharacterFrame.backdrop:Point("TOPLEFT", 11, -12)
   CharacterFrame.backdrop:Point("BOTTOMRIGHT", -32, 76)
+  E:EnableMovable("CharacterFrame", CHARACTERFRAME_SUBFRAMES)
 
   S:SetUIPanelWindowInfo(CharacterFrame, "width")
 
@@ -111,9 +112,12 @@ S:AddCallback("Skin_Character", function()
 
   CharacterModelFrame:Size(237, 217)
   CharacterModelFrame:Point("TOPLEFT", 63, -76)
+  E:EnableClickRotate(CharacterModelFrame)
 
   CharacterModelFrameRotateLeftButton:Point("TOPLEFT", 4, -4)
   CharacterModelFrameRotateRightButton:Point("TOPLEFT", CharacterModelFrameRotateLeftButton, "TOPRIGHT", 3, 0)
+  CharacterModelFrameRotateLeftButton:Hide()
+  CharacterModelFrameRotateRightButton:Hide()
 
   CharacterResistanceFrame:Point("TOPRIGHT", PaperDollFrame, "TOPLEFT", 300, -81)
 
@@ -314,7 +318,6 @@ S:AddCallback("Skin_Character", function()
   GearManagerDialog.backdrop:Point("BOTTOMRIGHT", -3, 4)
 
   S:SetBackdropHitRect(GearManagerDialog)
-
   S:HandleCloseButton(GearManagerDialogClose, GearManagerDialog.backdrop)
 
   for i, button in ipairs(GearManagerDialog.buttons) do
@@ -350,7 +353,6 @@ S:AddCallback("Skin_Character", function()
 
   GearManagerDialogPopupScrollFrame:StripTextures()
   S:HandleScrollBar(GearManagerDialogPopupScrollFrameScrollBar)
-
   S:HandleEditBox(GearManagerDialogPopupEditBox)
 
   for i, button in ipairs(GearManagerDialogPopup.buttons) do
@@ -387,7 +389,6 @@ S:AddCallback("Skin_Character", function()
   end
 
   GearManagerDialogPopupEditBox:Point("TOPLEFT", 24, -36)
-
   GearManagerDialogPopupButton1:Point("TOPLEFT", 17, -83)
 
   GearManagerDialogPopupScrollFrame:SetTemplate("Transparent")
@@ -448,6 +449,7 @@ S:AddCallback("Skin_Character", function()
 
   PetModelFrame:Width(325)
   PetModelFrame:Point("TOPLEFT", 19, -71)
+  E:EnableClickRotate(PetModelFrame)
 
   PetModelFrameRotateLeftButton:Point("TOPLEFT", PetPaperDollFrame, "TOPLEFT", 23, -75)
   PetModelFrameRotateRightButton:Point("TOPLEFT", PetModelFrameRotateLeftButton, "TOPRIGHT", 3, 0)
@@ -519,9 +521,12 @@ S:AddCallback("Skin_Character", function()
 
   CompanionModelFrame:Size(325, 174)
   CompanionModelFrame:Point("TOPLEFT", 19, -71)
+  E:EnableClickRotate(CompanionModelFrame)
 
   CompanionModelFrameRotateLeftButton:Point("TOPLEFT", PetPaperDollFrame, "TOPLEFT", 23, -75)
   CompanionModelFrameRotateRightButton:Point("TOPLEFT", CompanionModelFrameRotateLeftButton, "TOPRIGHT", 3, 0)
+  CompanionModelFrameRotateLeftButton:Hide()
+  CompanionModelFrameRotateRightButton:Hide()
 
   CompanionButton1:Point("TOPLEFT", 58, -308)
 

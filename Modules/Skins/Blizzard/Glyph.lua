@@ -14,6 +14,7 @@ S:AddCallbackForAddon("Blizzard_GlyphUI", "Skin_Blizzard_GlyphUI", function()
   end
 
   GlyphFrame:StripTextures()
+  E:EnableMovable("GlyphFrame")
 
   GlyphFrameBackground:Size(323, 349)
   GlyphFrameBackground:Point("TOPLEFT", 20, -59)

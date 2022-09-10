@@ -29,6 +29,7 @@ S:AddCallback("Skin_Loot", function()
   LootFrame:CreateBackdrop("Transparent")
   LootFrame.backdrop:Point("TOPLEFT", 16, -54)
   LootFrame.backdrop:Point("BOTTOMRIGHT", -77, 8)
+  E:EnableMovable("LootFrame")
 
   S:SetBackdropHitRect(LootFrame, nil, true)
 

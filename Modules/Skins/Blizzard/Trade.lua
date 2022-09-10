@@ -17,6 +17,7 @@ S:AddCallback("Skin_Trade", function()
   TradeFrame:CreateBackdrop("Transparent")
   TradeFrame.backdrop:Point("TOPLEFT", 11, -12)
   TradeFrame.backdrop:Point("BOTTOMRIGHT", -21, 49)
+  E:EnableMovable("TradeFrame")
 
   S:SetUIPanelWindowInfo(TradeFrame, "width")
   S:SetBackdropHitRect(TradeFrame)

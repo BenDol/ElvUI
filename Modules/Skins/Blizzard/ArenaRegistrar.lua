@@ -13,6 +13,7 @@ S:AddCallback("Skin_ArenaRegistrar", function()
   ArenaRegistrarFrame:CreateBackdrop("Transparent")
   ArenaRegistrarFrame.backdrop:Point("TOPLEFT", 11, -12)
   ArenaRegistrarFrame.backdrop:Point("BOTTOMRIGHT", -32, 76)
+  E:EnableMovable("ArenaRegistrarFrame")
 
   S:SetUIPanelWindowInfo(ArenaRegistrarFrame, "width")
   S:SetBackdropHitRect(ArenaRegistrarFrame)

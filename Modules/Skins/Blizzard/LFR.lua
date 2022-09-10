@@ -12,6 +12,7 @@ S:AddCallback("Skin_LFR", function()
   LFRParentFrame:CreateBackdrop("Transparent")
   LFRParentFrame.backdrop:Point("TOPLEFT", 11, -12)
   LFRParentFrame.backdrop:Point("BOTTOMRIGHT", -3, 4)
+  E:EnableMovable("LFRParentFrame")
 
   S:HookScript(LFRParentFrame, "OnShow", function(self)
     S:SetUIPanelWindowInfo(self, "width")

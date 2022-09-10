@@ -15,6 +15,7 @@ S:AddCallbackForAddon("Blizzard_BattlefieldMinimap", "Skin_Blizzard_BattlefieldM
   BattlefieldMinimap:SetFrameStrata("LOW")
   BattlefieldMinimap:CreateBackdrop("Default")
   BattlefieldMinimap.backdrop:Point("BOTTOMRIGHT", E.Border - E:Scale(6), -(E.Border - E:Scale(4)))
+  E:EnableMovable("BattlefieldMinimap")
 
   S:SetBackdropHitRect(BattlefieldMinimap, nil, true)
 

@@ -17,6 +17,7 @@ S:AddCallbackForAddon("Blizzard_GuildBankUI", "Skin_Blizzard_GuildBankUI", funct
   GuildBankFrame:CreateBackdrop("Transparent")
   GuildBankFrame.backdrop:Point("TOPLEFT", 11, -12)
   GuildBankFrame.backdrop:Point("BOTTOMRIGHT", 0, 8)
+  E:EnableMovable("GuildBankFrame")
 
   S:HookScript(GuildBankFrame, "OnShow", function(self)
     S:SetUIPanelWindowInfo(self, "width", nil, 35)

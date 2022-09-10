@@ -12,7 +12,7 @@ S:AddCallbackForAddon("Blizzard_MacroUI", "Skin_Blizzard_MacroUI", function()
   MacroFrame:StripTextures()
   MacroFrame:CreateBackdrop("Transparent")
   MacroFrame.backdrop:Point("TOPLEFT", 11, -12)
-  MacroFrame.backdrop:Point("BOTTOMRIGHT", -32, 76)
+  E:EnableMovable("MacroFrame")
 
   S:SetUIPanelWindowInfo(MacroFrame, "width")
   S:SetBackdropHitRect(MacroFrame)

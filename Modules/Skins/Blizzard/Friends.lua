@@ -25,6 +25,7 @@ S:AddCallback("Skin_Friends", function()
   FriendsFrame:CreateBackdrop("Transparent")
   FriendsFrame.backdrop:Point("TOPLEFT", 11, -12)
   FriendsFrame.backdrop:Point("BOTTOMRIGHT", -32, 76)
+  E:EnableMovable("FriendsFrame")
 
   S:SetUIPanelWindowInfo(FriendsFrame, "width")
   S:SetBackdropHitRect(FriendsFrame)

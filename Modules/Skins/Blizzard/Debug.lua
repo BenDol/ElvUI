@@ -11,6 +11,7 @@ S:AddCallbackForAddon("Blizzard_DebugTools", "Skin_Blizzard_DebugTools", functio
   ScriptErrorsFrame:SetParent(E.UIParent)
   ScriptErrorsFrame:StripTextures()
   ScriptErrorsFrame:SetTemplate("Transparent")
+  E:EnableMovable("ScriptErrorsFrame")
 
   S:HandleScrollBar(ScriptErrorsFrameScrollFrameScrollBar)
   S:HandleCloseButton(ScriptErrorsFrameClose, ScriptErrorsFrame)
