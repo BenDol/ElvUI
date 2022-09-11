@@ -62,6 +62,12 @@ function mod:ExperienceBar_Update(event)
 
   bar.text:Point(self.db.experience.textAlignment)
 
+  if mod.db.experience.textShow then
+    bar.text:Show()
+  else
+    bar.text:Hide()
+  end
+
   if hideBar or (event == "PLAYER_REGEN_DISABLED" and self.db.experience.hideInCombat) then
     E:DisableMover(bar.mover:GetName())
     bar:Hide()

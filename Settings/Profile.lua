@@ -114,6 +114,7 @@ P.databars = {
     enable = true,
     width = 803,
     height = 8,
+    textShow = true,
     textFormat = "PERCENT",
     textSize = 8,
     textAlignment = "BOTTOM",

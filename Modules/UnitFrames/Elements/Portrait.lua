@@ -84,6 +84,8 @@ function UF:Configure_Portrait(frame, dontHide)
 
       if db.portrait.backDrop then
         portrait.backdrop:Show()
+      else
+        portrait.backdrop:Hide()
       end
 
       if db.portrait.style == "3D" then

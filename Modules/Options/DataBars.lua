@@ -68,6 +68,12 @@ E.Options.args.databars = {
           type = "toggle",
           name = L["Show Bubbles"]
         },
+        textShow = {
+          order = 6,
+          type = "toggle",
+          name = L["Show Text"],
+          set = function(info, value) mod.db.experience[info[#info]] = value mod:ExperienceBar_Update() end
+        },
         spacer = {
           order = 7,
           type = "description",
@@ -253,15 +259,22 @@ E.Options.args.databars = {
         showBubbles = {
           order = 7,
           type = "toggle",
-          name = L["Show Bubbles"]
+          name = L["Show Bubbles"],
+          set = function(info, value) mod.db.petExperience[info[#info]] = value mod:PetExperienceBar_Update() end
+        },
+        textShow = {
+          order = 8,
+          type = "toggle",
+          name = L["Show Text"],
+          set = function(info, value) mod.db.petExperience[info[#info]] = value mod:PetExperienceBar_Update() end
         },
         spacer = {
-          order = 8,
+          order = 9,
           type = "description",
           name = " "
         },
         orientation = {
-          order = 9,
+          order = 10,
           type = "select",
           name = L["Statusbar Fill Orientation"],
           desc = L["Direction the bar moves on gains/losses"],
@@ -271,37 +284,37 @@ E.Options.args.databars = {
           }
         },
         width = {
-          order = 10,
+          order = 11,
           type = "range",
           name = L["Width"],
           min = 5, max = ceil(GetScreenWidth() or 800), step = 1
         },
         height = {
-          order = 11,
+          order = 12,
           type = "range",
           name = L["Height"],
           min = 5, max = ceil(GetScreenHeight() or 800), step = 1
         },
         font = {
-          order = 12,
+          order = 13,
           type = "select", dialogControl = "LSM30_Font",
           name = L["Font"],
           values = AceGUIWidgetLSMlists.font
         },
         textSize = {
-          order = 13,
+          order = 14,
           type = "range",
           name = L["FONT_SIZE"],
           min = 6, max = 22, step = 1
         },
         fontOutline = {
-          order = 14,
+          order = 15,
           type = "select",
           name = L["Font Outline"],
           values = C.Values.FontFlags
         },
         textFormat = {
-          order = 15,
+          order = 16,
           type = "select",
           name = L["Text Format"],
           width = "double",
