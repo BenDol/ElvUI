@@ -27,7 +27,7 @@
 
   <Script file="UnitFrames.lua"/>
   <Script file="ConfigEnviroment.lua"/>
-  <Include file="Elements\Load_Elements.xml"/>
-  <Include file="Units\Load_Units.xml"/>
-  <Include file="Groups\Load_Groups.xml"/>
+  <Include file="Elements\Elements.xml"/>
+  <Include file="Units\Units.xml"/>
+  <Include file="Groups\Groups.xml"/>
 </Ui>

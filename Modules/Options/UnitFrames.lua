@@ -1945,6 +1945,7 @@ local function GetOptionsTable_HealPrediction(updateFunc, groupName, numGroup)
 end
 
 local function CreateCustomTextGroup(unit, objectName)
+  if type(objectName) ~= "string" then return end
   if not E.Options.args.unitframe.args[unit] then
     return
   elseif E.Options.args.unitframe.args[unit].args.customText.args[objectName] then

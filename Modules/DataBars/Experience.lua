@@ -89,19 +89,19 @@ function mod:ExperienceBar_Update(event)
       bar.rested:SetValue(min(curExp + rested, maxExp))
 
       if textFormat == "PERCENT" then
-        bar.text:SetFormattedText("%d%% R:%d%%", curExp / maxExp * 100, rested / maxExp * 100)
+        bar.text:SetFormattedText("%d%%", curExp / maxExp * 100, rested / maxExp * 100)
       elseif textFormat == "CURMAX" then
-        bar.text:SetFormattedText("%s - %s R:%s", E:ShortValue(curExp), E:ShortValue(maxExp), E:ShortValue(rested))
+        bar.text:SetFormattedText("%s - %s", E:ShortValue(curExp), E:ShortValue(maxExp))
       elseif textFormat == "CURPERC" then
-        bar.text:SetFormattedText("%s - %d%% R:%s [%d%%]", E:ShortValue(curExp), curExp / maxExp * 100, E:ShortValue(rested), rested / maxExp * 100)
+        bar.text:SetFormattedText("%s - %d%%", E:ShortValue(curExp), curExp / maxExp * 100)
       elseif textFormat == "CUR" then
-        bar.text:SetFormattedText("%s R:%s", E:ShortValue(curExp), E:ShortValue(rested))
+        bar.text:SetFormattedText("%s", E:ShortValue(curExp))
       elseif textFormat == "REM" then
-        bar.text:SetFormattedText("%s R:%s", E:ShortValue(maxExp - curExp), E:ShortValue(rested))
+        bar.text:SetFormattedText("%s", E:ShortValue(maxExp - curExp))
       elseif textFormat == "CURREM" then
-        bar.text:SetFormattedText("%s - %s R:%s", E:ShortValue(curExp), E:ShortValue(maxExp - curExp), E:ShortValue(rested))
+        bar.text:SetFormattedText("%s - %s", E:ShortValue(curExp), E:ShortValue(maxExp - curExp))
       elseif textFormat == "CURPERCREM" then
-        bar.text:SetFormattedText("%s - %d%% (%s) R:%s", E:ShortValue(curExp), curExp / maxExp * 100, E:ShortValue(maxExp - curExp), E:ShortValue(rested))
+        bar.text:SetFormattedText("%s - %d%% (%s)", E:ShortValue(curExp), curExp / maxExp * 100, E:ShortValue(maxExp - curExp))
       end
     else
       bar.rested:SetMinMaxValues(0, 1)
