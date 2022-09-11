@@ -3,6 +3,7 @@
   <Include file="Locales\Locales.xml"/>
 
   <Script file="Options.lua" />
+  <Script file="General.lua" />
   <Script file="ActionBars.lua" />
   <Script file="Auras.lua" />
   <Script file="Bags.lua" />

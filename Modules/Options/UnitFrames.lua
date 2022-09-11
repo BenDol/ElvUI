@@ -1164,7 +1164,13 @@ local function GetOptionsTable_Portrait(updateFunc, groupName, numUnits)
         desc = L["Set the alpha level of portrait when frame is overlayed."],
         min = 0.01, max = 1, step = 0.01,
         disabled = function() return not E.db.unitframe.units[groupName].portrait.overlay end,
-      }
+      },
+      backDrop = {
+        order = 8,
+        type = "toggle",
+        name = L["Back Drop"],
+        desc = L["Use back drop for portrait."]
+      },
     }
   }
 

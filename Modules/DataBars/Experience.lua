@@ -60,6 +60,8 @@ function mod:ExperienceBar_Update(event)
   local bar = self.expBar
   local hideBar = (self.playerLevel == self.maxExpansionLevel and self.db.experience.hideAtMaxLevel) or self.expDisabled
 
+  bar.text:Point(self.db.experience.textAlignment)
+
   if hideBar or (event == "PLAYER_REGEN_DISABLED" and self.db.experience.hideInCombat) then
     E:DisableMover(bar.mover:GetName())
     bar:Hide()
@@ -245,7 +247,11 @@ function mod:ExperienceBar_QuestXPToggle(event)
 end
 
 function mod:ExperienceBar_Load()
-  self.expBar = self:CreateBar("ElvUI_ExperienceBar", self.ExperienceBar_OnEnter, self.ExperienceBar_OnClick, "LEFT", LeftChatPanel, "RIGHT", -E.Border + E.Spacing*3, 0)
+  self.expBar = self:CreateBar("ElvUI_ExperienceBar", self.ExperienceBar_OnEnter, self.ExperienceBar_OnClick, 
+    "BOTTOMLEFT", ElvUI_Bar5, "TOPLEFT", 0, 1)
+
+  self.expBar.text:Point(self.db.experience.textAlignment)
+
   self.expBar:RegisterForClicks("RightButtonUp")
   self.expBar.statusBar:SetFrameLevel(4)
   self.expBar.statusBar:SetStatusBarColor(0, 0.4, 1, 0.8)
@@ -297,8 +303,7 @@ function mod:ExperienceBar_Load()
       self:ExperienceBar_Update(event)
       self:ExperienceBar_QuestXPToggle(event)
       return
-    elseif event == "QUEST_LOG_UPDATE"
-    or event == "ZONE_CHANGED_NEW_AREA"
+    elseif event == "QUEST_LOG_UPDATE" or event == "ZONE_CHANGED_NEW_AREA"
     then
       self:ExperienceBar_QuestXPUpdate(event)
       return

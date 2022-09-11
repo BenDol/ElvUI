@@ -210,6 +210,7 @@ end
 local LoadUI = CreateFrame("Frame")
 LoadUI:RegisterEvent("PLAYER_LOGIN")
 LoadUI:SetScript("OnEvent", function()
+  AddOn.Masque = AddOn.Masque or LibStub("Masque", true)
   AddOn:Initialize()
 end)
 

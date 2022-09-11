@@ -9,18 +9,18 @@ local CreateFrame = CreateFrame
 
 local backdropr, backdropg, backdropb, backdropa, borderr, borderg, borderb = 0, 0, 0, 1, 0, 0, 0
 local function GetTemplate(template, isUnitFrameElement)
-  backdropa = 1
+  --backdropa = 1
 
   if template == "ClassColor" then
     local color = CUSTOM_CLASS_COLORS and CUSTOM_CLASS_COLORS[E.myclass] or RAID_CLASS_COLORS[E.myclass]
     borderr, borderg, borderb = color.r, color.g, color.b
-    backdropr, backdropg, backdropb = unpack(E.media.backdropcolor)
+    backdropr, backdropg, backdropb, backdropa = unpack(E.media.backdropcolor)
   elseif template == "Transparent" then
     borderr, borderg, borderb = unpack(isUnitFrameElement and E.media.unitframeBorderColor or E.media.bordercolor)
     backdropr, backdropg, backdropb, backdropa = unpack(E.media.backdropfadecolor)
   else
     borderr, borderg, borderb = unpack(isUnitFrameElement and E.media.unitframeBorderColor or E.media.bordercolor)
-    backdropr, backdropg, backdropb = unpack(E.media.backdropcolor)
+    backdropr, backdropg, backdropb, backdropa = unpack(E.media.backdropcolor)
   end
 end
 
@@ -165,14 +165,14 @@ end
 local function CreateShadow(frame, size)
   if frame.shadow then return end
 
-  backdropr, backdropg, backdropb, borderr, borderg, borderb = 0, 0, 0, 0, 0, 0
+  backdropr, backdropg, backdropb, backdropa, borderr, borderg, borderb = 0, 0, 0, 1, 0, 0, 0
 
   local shadow = CreateFrame("Frame", nil, frame)
   shadow:SetFrameLevel(1)
   shadow:SetFrameStrata(frame:GetFrameStrata())
   shadow:SetOutside(frame, size or 3, size or 3)
   shadow:SetBackdrop({edgeFile = LSM:Fetch("border", "ElvUI GlowBorder"), edgeSize = E:Scale(size or 3)})
-  shadow:SetBackdropColor(backdropr, backdropg, backdropb, 0)
+  shadow:SetBackdropColor(backdropr, backdropg, backdropb, backdropa)
   shadow:SetBackdropBorderColor(borderr, borderg, borderb, 0.9)
   frame.shadow = shadow
 end

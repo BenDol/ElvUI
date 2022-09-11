@@ -283,6 +283,16 @@ function M:UpdateSettings()
     Minimap:Size(E.MinimapSize, E.MinimapSize)
   end
 
+  if E.private.general.minimap.enable and E.db.general.minimap.borderSize > 0 then
+    Minimap.holder:SetBackdrop({
+      edgeFile = [[Interface/Buttons/WHITE8X8]],
+      edgeSize = E.db.general.minimap.borderSize})
+    Minimap.holder:SetBackdropBorderColor(0, 0, 0, 1)
+  else
+    Minimap.holder:SetBackdrop(nil)
+    Minimap.holder:SetBackdropBorderColor(0, 0, 0, 0)
+  end
+
   if LeftMiniPanel and RightMiniPanel then
     if E.db.datatexts.minimapPanels and E.private.general.minimap.enable then
       LeftMiniPanel:Show()
@@ -437,8 +447,6 @@ end
 function M:Initialize()
   menuFrame:SetTemplate("Transparent", true)
 
-  self:UpdateSettings()
-
   if not E.private.general.minimap.enable then
     Minimap:SetMaskTexture("Textures\\MinimapMask")
     return
@@ -450,6 +458,10 @@ function M:Initialize()
   end
 
   local mmholder = CreateFrame("Frame", "MMHolder", Minimap)
+  Minimap.holder = mmholder
+
+  self:UpdateSettings()
+
   mmholder:Point("TOPRIGHT", E.UIParent, "TOPRIGHT", -3, -3)
   mmholder:Width((Minimap:GetWidth() + 29) + E.RBRWidth)
   mmholder:Height(Minimap:GetHeight() + 53)
@@ -479,6 +491,13 @@ function M:Initialize()
   Minimap.location:SetJustifyV("MIDDLE")
   if E.db.general.minimap.locationText ~= "SHOW" or not E.private.general.minimap.enable then
     Minimap.location:Hide()
+  end
+
+  if E.db.general.minimap.borderSize > 0 then
+    mmholder:SetBackdrop({
+      edgeFile = [[Interface/Buttons/WHITE8X8]],
+      edgeSize = E.db.general.minimap.borderSize})
+    mmholder:SetBackdropBorderColor(0, 0, 0, 1)
   end
 
   MinimapBorder:Hide()

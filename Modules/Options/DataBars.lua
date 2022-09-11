@@ -130,8 +130,26 @@ E.Options.args.databars = {
           },
           set = function(info, value) mod.db.experience[info[#info]] = value mod:ExperienceBar_Update() end
         },
-        questXP = {
+        textAlignment = {
           order = 15,
+          type = "select",
+          name = L["Text Alignment"],
+          desc = L["Point of the text"],
+          values = {
+            ["CENTER"] = L["Center"],
+            ["TOP"] = L["Top"],
+            ["BOTTOM"] = L["Bottom"],
+            ["LEFT"] = L["Left"],
+            ["RIGHT"] = L["Right"],
+            ["TOPLEFT"] = L["Top Left"],
+            ["TOPRIGHT"] = L["Top Right"],
+            ["BOTTOMLEFT"] = L["Bottom Left"],
+            ["BOTTOMRIGHT"] = L["Bottom Right"]
+          },
+          set = function(info, value) mod.db.experience[info[#info]] = value mod:ExperienceBar_Update() end
+        },
+        questXP = {
+          order = 16,
           type = "group",
           name = L["Quest XP"],
           guiInline = true,

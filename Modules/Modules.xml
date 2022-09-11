@@ -3,8 +3,8 @@
   <Include file="Nameplates\Nameplates.xml"/>
   <Include file="Tooltip\Tooltip.xml"/>
   <Include file="DataTexts\DataTexts.xml"/>
-  <Include file="DataBars\DataBars.xml"/>
   <Include file="Actionbars\Actionbars.xml"/>
+  <Include file="DataBars\DataBars.xml"/>
   <Include file="UnitFrames\UnitFrames.xml"/>
   <Include file="Maps\Maps.xml"/>
   <Include file="Chat\Chat.xml"/>

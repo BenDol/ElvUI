@@ -117,7 +117,7 @@ function NP:Update_Health(frame)
   frame.Health:SetValue(health)
   frame.FlashTexture:Point("TOPRIGHT", frame.Health:GetStatusBarTexture(), "TOPRIGHT") --idk why this fixes this
 
-  if self.db.units[frame.UnitType].health.text.enable then
+  if self.db.units[frame.UnitType].health.enable and self.db.units[frame.UnitType].health.text.enable then
     frame.Health.Text:SetText(E:GetFormattedText(self.db.units[frame.UnitType].health.text.format, health, maxHealth))
   end
 end

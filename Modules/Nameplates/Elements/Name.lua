@@ -14,15 +14,17 @@ local RAID_CLASS_COLORS = RAID_CLASS_COLORS
 local UNKNOWN = UNKNOWN
 
 local function abbrev(name)
-  local letters, lastWord = "", match(name, ".+%s(.+)$")
-  if lastWord then
-    for word in gmatch(name, ".-%s") do
-      local firstLetter = utf8sub(gsub(word, "^[%s%p]*", ""), 1, 1)
-      if firstLetter ~= utf8lower(firstLetter) then
-        letters = format("%s%s. ", letters, firstLetter)
+  if string.len(name) > 14 then
+    local letters, lastWord = "", match(name, ".+%s(.+)$")
+    if lastWord then
+      for word in gmatch(name, ".-%s") do
+        local firstLetter = utf8sub(gsub(word, "^[%s%p]*", ""), 1, 1)
+        if firstLetter ~= utf8lower(firstLetter) then
+          letters = format("%s%s. ", letters, firstLetter)
+        end
+        name = format("%s%s", letters, lastWord)
       end
     end
-    name = format("%s%s", letters, lastWord)
   end
   return name
 end

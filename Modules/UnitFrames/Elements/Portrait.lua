@@ -81,7 +81,11 @@ function UF:Configure_Portrait(frame, dontHide)
       if not dontHide then
         portrait:Show()
       end
-      portrait.backdrop:Show()
+
+      if db.portrait.backDrop then
+        portrait.backdrop:Show()
+      end
+
       if db.portrait.style == "3D" then
         portrait:SetFrameLevel(frame.Health:GetFrameLevel() -4) --Make sure portrait is behind Health and Power
       else

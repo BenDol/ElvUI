@@ -161,6 +161,16 @@ E.Options.args.maps = {
               get = function(info) return E.db.general.minimap[info[#info]] end,
               set = function(info, value) E.db.general.minimap[info[#info]] = value MM:UpdateSettings() end,
               disabled = function() return not E.private.general.minimap.enable end
+            },
+            borderSize = {
+              order = 3,
+              type = "range",
+              name = L["Border Size"],
+              desc = L["Adjust the border size of the minimap."],
+              min = 0, max = 20, step = 1,
+              get = function(info) return E.db.general.minimap[info[#info]] end,
+              set = function(info, value) E.db.general.minimap[info[#info]] = value MM:UpdateSettings() end,
+              disabled = function() return not E.private.general.minimap.enable end
             }
           }
         },

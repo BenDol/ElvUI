@@ -354,7 +354,7 @@ E.Options.args.general = {
               type = "color",
               name = L["Backdrop Color"],
               desc = L["Main backdrop color of the UI."],
-              hasAlpha = false,
+              hasAlpha = true,
             },
             backdropfadecolor = {
               order = 3,

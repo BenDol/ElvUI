@@ -29,7 +29,7 @@ function mod:CreateBar(name, onEnter, onClick, ...)
 
   bar.text = bar.statusBar:CreateFontString(nil, "OVERLAY")
   bar.text:FontTemplate()
-  bar.text:Point("CENTER")
+  bar.text:Point("BOTTOM")
 
   return bar
 end
