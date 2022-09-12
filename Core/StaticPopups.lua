@@ -232,11 +232,9 @@ E.PopupDialogs.RESET_UF_UNIT = {
         UF:CreateAndUpdateHeaderGroup(self.data.unit, nil, nil, true)
       end
 
-      if IsAddOnLoaded("ElvUI_OptionsUI") then
-        local ACD = E.Libs.AceConfigDialog
-        if ACD and ACD.OpenFrames and ACD.OpenFrames.ElvUI then
-          ACD:SelectGroup("ElvUI", "unitframe", self.data.unit)
-        end
+      local ACD = E.Libs.AceConfigDialog
+      if ACD and ACD.OpenFrames and ACD.OpenFrames.ElvUI then
+        ACD:SelectGroup("ElvUI", "unitframe", self.data.unit)
       end
     else
       E:Print(L["Error resetting UnitFrame."])
@@ -490,16 +488,14 @@ function E:StaticPopup_OnShow()
   end
 
   -- boost static popups over ace gui
-  if IsAddOnLoaded("ElvUI_OptionsUI") then
-    local ACD = E.Libs.AceConfigDialog
-    if ACD and ACD.OpenFrames and ACD.OpenFrames.ElvUI then
-      self.frameStrataIncreased = true
-      self:SetFrameStrata("FULLSCREEN_DIALOG")
+  local ACD = E.Libs.AceConfigDialog
+  if ACD and ACD.OpenFrames and ACD.OpenFrames.ElvUI then
+    self.frameStrataIncreased = true
+    self:SetFrameStrata("FULLSCREEN_DIALOG")
 
-      local popupFrameLevel = self:GetFrameLevel()
-      if popupFrameLevel < 100 then
-        self:SetFrameLevel(popupFrameLevel+100)
-      end
+    local popupFrameLevel = self:GetFrameLevel()
+    if popupFrameLevel < 100 then
+      self:SetFrameLevel(popupFrameLevel+100)
     end
   end
 end

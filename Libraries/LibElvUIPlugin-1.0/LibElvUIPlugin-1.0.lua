@@ -126,19 +126,13 @@ function lib:RegisterPlugin(name, callback, isLib, libVersion)
     lib.registeredPrefix = true
   end
 
-  local loaded = IsAddOnLoaded("ElvUI_OptionsUI")
-  if not loaded then
-    lib.CFFrame:RegisterEvent("ADDON_LOADED")
-  elseif loaded then
-    if name ~= MAJOR then
-      E.Options.args.plugins.args.plugins.name = lib:GeneratePluginList()
-    end
-
-    if callback then
-      callback()
-    end
+  if name ~= MAJOR then
+    lib:GetPluginOptions()
   end
 
+  if callback then
+    callback()
+  end
   return plugin
 end
 
@@ -153,20 +147,6 @@ function lib:DelayedSendVersionCheck(delay)
 
   if not lib.SendMessageWaiting then
     lib.SendMessageWaiting = E:Delay(delay or 10, E.SendPluginVersionCheck)
-  end
-end
-
-function lib:OptionsUILoaded(_, addon)
-  if addon == "ElvUI_OptionsUI" then
-    lib:GetPluginOptions()
-
-    for _, plugin in pairs(lib.plugins) do
-      if plugin.callback then
-        plugin.callback()
-      end
-    end
-
-    lib.CFFrame:UnregisterEvent("ADDON_LOADED")
   end
 end
 
@@ -330,6 +310,3 @@ end
 
 lib.VCFrame = CreateFrame("Frame")
 lib.VCFrame:SetScript("OnEvent", lib.VersionCheck)
-
-lib.CFFrame = CreateFrame("Frame")
-lib.CFFrame:SetScript("OnEvent", lib.OptionsUILoaded)

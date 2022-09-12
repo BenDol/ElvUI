@@ -65,13 +65,11 @@ function E:ToggleMoveMode(override, configType)
 
     ElvUIMoverPopupWindow:Show()
 
-    if IsAddOnLoaded("ElvUI_OptionsUI") then
-      if E.Libs.AceConfigDialog then
-        E.Libs.AceConfigDialog:Close("ElvUI")
-      end
-
-      GameTooltip:Hide()
+    if E.Libs.AceConfigDialog then
+      E.Libs.AceConfigDialog:Close("ElvUI")
     end
+
+    GameTooltip:Hide()
 
     E.ConfigurationMode = true
   else
@@ -288,7 +286,7 @@ function E:CreateMoverPopup()
   lock:SetScript("OnClick", function()
     E:ToggleMoveMode(true)
 
-    if IsAddOnLoaded("ElvUI_OptionsUI") and E.Libs.AceConfigDialog then
+    if E.Libs.AceConfigDialog then
       E.Libs.AceConfigDialog:Open("ElvUI")
     end
 

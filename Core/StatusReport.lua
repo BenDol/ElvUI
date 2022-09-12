@@ -16,7 +16,7 @@ local function AreOtherAddOnsEnabled()
   local name, loadable, reason, _
   for i = 1, GetNumAddOns() do
     name, _, _, loadable, reason = GetAddOnInfo(i)
-    if (name ~= "ElvUI" and name ~= "ElvUI_OptionsUI") and (loadable or (not loadable and reason == "DEMAND_LOADED")) then --Loaded or load on demand
+    if name ~= "ElvUI" and (loadable or (not loadable and reason == "DEMAND_LOADED")) then --Loaded or load on demand
       return "Yes"
     end
   end

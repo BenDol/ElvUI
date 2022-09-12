@@ -38,7 +38,7 @@ function E:LuaError(msg)
 
     for i = 1, GetNumAddOns() do
       local name, _, _, enabled = GetAddOnInfo(i)
-      if enabled and name ~= "ElvUI" and name ~= "ElvUI_OptionsUI" then
+      if enabled and name ~= "ElvUI" then
         disabledList[#disabledList + 1] = name
         DisableAddOn(name)
       end
