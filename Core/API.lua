@@ -529,11 +529,8 @@ function E:EnableWheelZoom(frame, speed, dontSave)
 
   HookScript(frame, "OnMouseWheel", function(_, delta)
     local x, y, z = this:GetPosition()
-    local zoomX = x + (delta == 1 and speed or -speed)
-    print(zoomX)
-    if zoomX >= 5 or zoomX <= -10 then return end
-    this.zoomX = zoomX
-    this:SetPosition(zoomX, y, z)
+    this.zoomX = math.min(5, math.max(-10, x + (delta == 1 and speed or -speed)))
+    this:SetPosition(this.zoomX, y, z)
   end)
 end
 
