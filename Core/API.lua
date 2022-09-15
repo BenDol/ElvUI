@@ -511,14 +511,14 @@ end
 -- [ EnableWheelZoom ]
 -- Enables Modelframes to be zoomed with the mouse wheel
 -- 'frame'    [frame]         the modelframe that should be used
-function E:EnableWheelZoom(frame, speed, dontSave)
-  local speed = speed or 1
+function E:EnableWheelZoom(frame, dontSave, speed)
+  local speed = speed or 0.5
   frame:EnableMouseWheel(true)
 
   if not dontSave then
     HookScript(frame, "OnShow", function()
       this.origZoomX, y, z = this:GetPosition()
-      if this.zoomX then this:SetPosition(this.zoomX) end
+      if this.zoomX then this:SetPosition(this.zoomX, y, z) end
     end)
   end
 

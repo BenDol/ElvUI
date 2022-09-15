@@ -46,7 +46,7 @@ S:AddCallback("Skin_DressingRoom", function()
   DressUpModel:ClearAllPoints()
   DressUpModel:Point("TOPLEFT", 20, -67)
   E:EnableClickRotate(DressUpModel)
-  E:EnableWheelZoom(DressUpModel)
+  E:EnableWheelZoom(DressUpModel, true)
   E:EnableMouseDrag(DressUpModel)
 
   DressUpBackgroundTopLeft:Point("TOPLEFT", 23, -67)
