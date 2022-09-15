@@ -38,11 +38,16 @@ S:AddCallback("Skin_DressingRoom", function()
   DressUpFrameDescriptionText:Point("CENTER", DressUpFrameTitleText, "BOTTOM", 10, -18)
 
   DressUpModelRotateLeftButton:Point("TOPLEFT", DressUpFrame, 29, -76)
+  DressUpModelRotateLeftButton:Hide()
   DressUpModelRotateRightButton:Point("TOPLEFT", DressUpModelRotateLeftButton, "TOPRIGHT", 3, 0)
+  DressUpModelRotateRightButton:Hide()
 
   DressUpModel:Size(323, 331)
   DressUpModel:ClearAllPoints()
   DressUpModel:Point("TOPLEFT", 20, -67)
+  E:EnableClickRotate(DressUpModel)
+  E:EnableWheelZoom(DressUpModel)
+  E:EnableMouseDrag(DressUpModel)
 
   DressUpBackgroundTopLeft:Point("TOPLEFT", 23, -67)
 

@@ -410,17 +410,18 @@ end
 -- 'name'       [frame/string]  Name of the Frame that should be movable
 -- 'addon'      [string]        Addon that must be loaded before being able to access the frame
 -- 'blacklist'  [table]         A list of frames that should be deactivated for mouse usage
-local function OnDragStart() this:StartMoving() end
-local function OnDragStop() this:StopMovingOrSizing() end
-local function OnShow()
-  if not this.lastPoint then return end
-  this:ClearAllPoints()
-  this:Point(this.lastPoint[1], this.lastPoint[4], this.lastPoint[5])
-end
-local function OnHide()
-  this.lastPoint = {this:GetPoint()}
-end
 function E:EnableMovable(name, blacklist, dontSave, addon)
+  local OnDragStart = function() this:StartMoving() end
+  local OnDragStop  = function() this:StopMovingOrSizing() end
+  local OnShow      = function()
+    if not this.lastPoint then return end
+    this:ClearAllPoints()
+    this:Point(this.lastPoint[1], this.lastPoint[4], this.lastPoint[5])
+  end
+  local OnHide = function()
+    this.lastPoint = {this:GetPoint()}
+  end
+
   if addon then
     local scan = CreateFrame("Frame")
     scan:RegisterEvent("ADDON_LOADED")
@@ -473,30 +474,120 @@ end
 -- [ EnableClickRotate ]
 -- Enables Modelframes to be rotated by click-drag
 -- 'frame'    [frame]         the modelframe that should be used
-function E:EnableClickRotate(frame)
+function E:EnableClickRotate(frame, dontSave, speed)
+  speed = speed or 0.025
   frame:EnableMouse(true)
+
+  if not dontSave then
+    HookScript(frame, "OnShow", function()
+      if this.rotation then this:SetRotation(this.rotation) end
+    end)
+  end
+
   HookScript(frame, "OnUpdate", function()
     if this.rotate then
       local x,_ = GetCursorPosition()
-      if this.curx > x then
-        this.rotation = this.rotation - abs(x-this.curx) * 0.025
-      elseif this.curx < x then
-        this.rotation = this.rotation + abs(x-this.curx) * 0.025
+      if this.curX > x then
+        this.rotation = this.rotation - abs(x-this.curX) * speed
+      elseif this.curX < x then
+        this.rotation = this.rotation + abs(x-this.curX) * speed
       end
       this:SetRotation(this.rotation)
-      this.curx, this.cury = x, y
+      this.curX = x
     end
   end)
 
   HookScript(frame, "OnMouseDown", function()
     if arg1 == "LeftButton" then
       this.rotate = true
-      this.curx, this.cury = GetCursorPosition()
+      this.curX = GetCursorPosition()
     end
   end)
-
   HookScript(frame, "OnMouseUp", function()
-    this.rotate, this.curx, this.cury = nil, nil, nil
+    this.rotate, this.curX = nil, 0
+  end)
+end
+
+-- [ EnableWheelZoom ]
+-- Enables Modelframes to be zoomed with the mouse wheel
+-- 'frame'    [frame]         the modelframe that should be used
+function E:EnableWheelZoom(frame, speed, dontSave)
+  local speed = speed or 1
+  frame:EnableMouseWheel(true)
+
+  if not dontSave then
+    HookScript(frame, "OnShow", function()
+      this.origZoomX, y, z = this:GetPosition()
+      if this.zoomX then this:SetPosition(this.zoomX) end
+    end)
+  end
+
+  HookScript(frame, "OnHide", function()
+    local _, y, z = this:GetPosition()
+    this:SetPosition(this.origZoomX, y, z)
+  end)
+
+  HookScript(frame, "OnMouseWheel", function(_, delta)
+    local x, y, z = this:GetPosition()
+    local zoomX = x + (delta == 1 and speed or -speed)
+    print(zoomX)
+    if zoomX >= 5 or zoomX <= -10 then return end
+    this.zoomX = zoomX
+    this:SetPosition(zoomX, y, z)
+  end)
+end
+
+-- [ Enable Draggable ]
+-- Set all necessary functions to make a already existing model frame draggable.
+-- 'name'       [frame/string]  Name of the Frame that should be movable
+function E:EnableMouseDrag(frame, dontSave, invert, button, step)
+  button = button or "RightButton"
+  step = step or 0.01
+
+  frame:EnableMouse(true)
+  frame.modelDrag = false
+  frame.curX, frame.curY = 0, 0
+
+  if not dontSave then
+    HookScript(frame, "OnShow", function()
+      local x, y, z = this:GetPosition()
+      this.origDragYZ = { y = y, z = z }
+      if this.dragYZ then
+        this:SetPosition(x, this.dragYZ.y, this.dragYZ.z)
+      end
+    end)
+  end
+
+  HookScript(frame, "OnHide", function()
+    local x, y, z = this:GetPosition()
+    this:SetPosition(x, this.origDragYZ.y, this.origDragYZ.z)
+  end)
+
+  HookScript(frame, "OnMouseDown", function(_, btn)
+    if btn == button then
+      this.curX, this.curY = GetCursorPosition()
+      this.mouseDrag = true
+    end
+  end)
+  HookScript(frame, "OnMouseUp", function(_, btn)
+    if btn == button then this.mouseDrag = false end
+  end)
+  HookScript(frame, "OnUpdate", function()
+    if not this.mouseDrag then
+      return
+    end
+    local curX, curY = GetCursorPosition()
+    local difX, difY = (curX-this.curX) * step, (curY-this.curY) * step
+
+    if invert then difX, difY = -difX, -difY end
+
+    local x, y, z = this:GetPosition()
+    local dragY = math.min(1.5, math.max(-1.5, y + difX))
+    local dragZ = math.min(1.5, math.max(-1.5, z + difY))
+
+    this.dragYZ = { y = dragY, z = dragZ }
+    this:SetPosition(x, this.dragYZ.y, this.dragYZ.z)
+    this.curX, this.curY = curX, curY
   end)
 end
 
