@@ -222,7 +222,7 @@ function M:Initialize()
 
     -- customize
     this:EnableKeyboard(false)
-    this:EnableMouseWheel(1)
+    this:EnableMouseWheel(true)
   end)
 
   if E.global.general.smallerWorldMap then

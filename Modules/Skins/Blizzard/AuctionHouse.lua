@@ -413,6 +413,9 @@ S:AddCallbackForAddon("Blizzard_AuctionUI", "Skin_Blizzard_AuctionUI", function(
 
   AuctionDressUpModel:CreateBackdrop()
   AuctionDressUpModel.backdrop:SetOutside(AuctionDressUpModel)
+  E:EnableWheelZoom(AuctionDressUpModel)
+  E:EnableClickRotate(AuctionDressUpModel)
+  E:EnableMouseDrag(AuctionDressUpModel)
 
   SetAuctionDressUpBackground()
   AuctionDressUpBackgroundTop:SetDesaturated(true)
@@ -433,7 +436,9 @@ S:AddCallbackForAddon("Blizzard_AuctionUI", "Skin_Blizzard_AuctionUI", function(
   AuctionDressUpBackgroundTop:Point("TOPLEFT", AuctionDressUpFrame, "TOPLEFT", 9, -27)
 
   AuctionDressUpModelRotateLeftButton:Point("TOPLEFT", AuctionDressUpFrame, "TOPLEFT", 12, -30)
+  AuctionDressUpModelRotateLeftButton:Hide()
   AuctionDressUpModelRotateRightButton:Point("TOPLEFT", AuctionDressUpModelRotateLeftButton, "TOPRIGHT", 3, 0)
+  AuctionDressUpModelRotateRightButton:Hide()
 
   AuctionDressUpFrameResetButton:Point("BOTTOM", AuctionDressUpModel, "BOTTOM", 0, 7)
 
