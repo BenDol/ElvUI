@@ -117,8 +117,8 @@ S:AddCallback("Skin_Character", function()
   E:EnableMouseDrag(CharacterModelFrame)
 
   CharacterModelFrameRotateLeftButton:Point("TOPLEFT", 4, -4)
-  CharacterModelFrameRotateRightButton:Point("TOPLEFT", CharacterModelFrameRotateLeftButton, "TOPRIGHT", 3, 0)
   CharacterModelFrameRotateLeftButton:Hide()
+  CharacterModelFrameRotateRightButton:Point("TOPLEFT", CharacterModelFrameRotateLeftButton, "TOPRIGHT", 3, 0)
   CharacterModelFrameRotateRightButton:Hide()
 
   CharacterResistanceFrame:Point("TOPRIGHT", PaperDollFrame, "TOPLEFT", 300, -81)

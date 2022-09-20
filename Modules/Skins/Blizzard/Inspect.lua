@@ -162,8 +162,12 @@ S:AddCallbackForAddon("Blizzard_InspectUI", "Skin_Blizzard_InspectUI", function(
 
   InspectModelFrame:Size(237, 324)
   InspectModelFrame:Point("TOPLEFT", 63, -76)
+  E:EnableClickRotate(InspectModelFrame)
+  E:EnableWheelZoom(InspectModelFrame)
+  E:EnableMouseDrag(InspectModelFrame)
 
   InspectModelRotateLeftButton:Point("TOPLEFT", 4, -4)
+  InspectModelRotateLeftButton:Hide()
 
   InspectTalentFrameScrollFrame:StripTextures()
   InspectTalentFrameScrollFrame:CreateBackdrop("Transparent")
@@ -173,6 +177,7 @@ S:AddCallbackForAddon("Blizzard_InspectUI", "Skin_Blizzard_InspectUI", function(
   InspectTalentFramePointsBar:StripTextures()
 
   InspectModelRotateRightButton:Point("TOPLEFT", InspectModelRotateLeftButton, "TOPRIGHT", 3, 0)
+  InspectModelRotateRightButton:Hide()
 
   InspectFrameTab1:Point("CENTER", InspectFrame, "BOTTOMLEFT", 54, 62)
   InspectFrameTab2:Point("LEFT", InspectFrameTab1, "RIGHT", -15, 0)

@@ -23,6 +23,9 @@ S:AddCallback("Skin_Tabard", function()
   TabardModel:CreateBackdrop("Transparent")
   TabardModel.backdrop:Point("TOPLEFT", -2, 5)
   TabardModel.backdrop:Point("BOTTOMRIGHT", 20, -1)
+  E:EnableClickRotate(TabardModel)
+  E:EnableWheelZoom(TabardModel)
+  E:EnableMouseDrag(TabardModel)
 
   S:HandleRotateButton(TabardCharacterModelRotateLeftButton)
   S:HandleRotateButton(TabardCharacterModelRotateRightButton)
@@ -42,7 +45,9 @@ S:AddCallback("Skin_Tabard", function()
   TabardModel:Point("BOTTOM", -20, 114)
 
   TabardCharacterModelRotateLeftButton:Point("BOTTOMLEFT", 2, 3)
+  TabardCharacterModelRotateLeftButton:Hide()
   TabardCharacterModelRotateRightButton:Point("TOPLEFT", TabardCharacterModelRotateLeftButton, "TOPRIGHT", 3, 0)
+  TabardCharacterModelRotateRightButton:Hide()
 
 --  TabardCharacterModelRotateLeftButton.SetPoint = E.noop
 --  TabardCharacterModelRotateRightButton.SetPoint = E.noop
