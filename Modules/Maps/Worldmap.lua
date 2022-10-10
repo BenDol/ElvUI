@@ -153,12 +153,12 @@ end
 function M:CheckMovement()
   if not WorldMapFrame:IsShown() then return end
 
-  if GetUnitSpeed("player") ~= 0 and not WorldMapPositioningGuide:IsMouseOver() then
-    WorldMapFrame:SetAlpha(E.global.general.mapAlphaWhenMoving)
+  if GetUnitSpeed("player") ~= 0 and (not E.global.general.smallerWorldMap or not WorldMapPositioningGuide:IsMouseOver()) then
+    E:UIFrameFadeOut(WorldMapFrame, 0.3, WorldMapFrame:GetAlpha(), E.global.general.mapAlphaWhenMoving)
     WorldMapBlobFrame:SetFillAlpha(128 * E.global.general.mapAlphaWhenMoving)
     WorldMapBlobFrame:SetBorderAlpha(192 * E.global.general.mapAlphaWhenMoving)
   else
-    WorldMapFrame:SetAlpha(1)
+    E:UIFrameFadeIn(WorldMapFrame, 0.3, WorldMapFrame:GetAlpha(), 1)
     WorldMapBlobFrame:SetFillAlpha(128)
     WorldMapBlobFrame:SetBorderAlpha(192)
   end
